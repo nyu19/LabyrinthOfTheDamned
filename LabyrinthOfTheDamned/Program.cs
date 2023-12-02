@@ -1,3 +1,3 @@
 ﻿
-using var game = new LabyrinthOfTheDamned.Game1();
+using var game = new LabyrinthOfTheDamned.MainGame();
 game.Run();
