@@ -21,6 +21,8 @@ namespace LabyrinthOfTheDamned
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            _graphics.PreferredBackBufferHeight = 700;
+            _graphics.PreferredBackBufferWidth = (int)(_graphics.PreferredBackBufferHeight * 1.78);
         }
 
         protected override void Initialize()
@@ -43,7 +45,6 @@ namespace LabyrinthOfTheDamned
 
             actionScene = new ActionScene(this);
             this.Components.Add(actionScene);
-            //actionScene.Show();
 
             helpScene = new HelpScene(this);
             this.Components.Add(helpScene);

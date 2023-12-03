@@ -1,27 +1,21 @@
-﻿using LabyrinthOfTheDamned.Utility;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LabyrinthOfTheDamned.Scenes.ActionScene
+namespace LabyrinthOfTheDamned.Scenes.CreditScene
 {
-    public class ActionScene : GameScene
+    public class CreditScene : GameScene
     {
-        SpriteBatch sb;
-
-        public ActionScene(Game game) : base(game)
+        public CreditScene(Game game) : base(game)
         {
-            MainGame g = (MainGame)game;
-            sb = Shared._sb;
+            // Implement Credit Scene
         }
 
         public override void Draw(GameTime gameTime)
         {
-
             base.Draw(gameTime);
         }
 
