@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpDX.MediaFoundation;
+using SharpDX.Direct3D9;
+using LabyrinthOfTheDamned.Utility;
 
 namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 {
@@ -26,13 +28,15 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         const int FRAME_WIDTH = 288;
         const int SPEED_FACTOR = 3;
         const int JUMP_FACTOR = -10;
-        const int GROUND_Y = 600;
+        const int GROUND_Y = 1000;
         int scaleFactor = 1;
         SpriteBatch sb;
         double delay, delayCounter;
         bool hasJumped;
         Vector2 origin;
-        Texture2D texWalk, texAttack, texIdle, texDeath, texHurt, activeTex;
+        KeyModel playerKeys;
+        TextureModel playerTextures;
+        Texture2D activeTex;
         int frameCounter = 0;
         Rectangle frame = new Rectangle(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
         Rectangle dest;
@@ -43,44 +47,39 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         Vector2 velocity;
         Rectangle hitbox;
 
-        public Player(Game game, SpriteBatch sb, Texture2D texWalk, Texture2D texAttack, Texture2D texIdle, Texture2D texDeath, Texture2D texHurt) : base(game)
+        public Player(Game game, SpriteBatch sb, TextureModel playerTextures, KeyModel playerKeys) : base(game)
         {
-            this.game = (MainGame)game;
+            this.game = (MainGame) game;
             this.sb = sb;
-            dest = new Rectangle(200, GROUND_Y, FRAME_WIDTH * scaleFactor, FRAME_HEIGHT * scaleFactor);
-            this.texWalk = texWalk;
-            this.texAttack = texAttack;
-            this.texIdle = texIdle;
-            this.texDeath = texDeath;
-            this.texHurt = texHurt;
-            this.activeTex = texHurt;
+            dest = new Rectangle((int)Shared.stageSize.X/2, GROUND_Y, FRAME_WIDTH * scaleFactor, FRAME_HEIGHT * scaleFactor);
+            this.playerTextures = playerTextures;
+            this.activeTex = playerTextures.Hurt;
+            this.playerKeys = playerKeys;
             hasJumped = true;
-            //this.origin = new Vector2(activeTex.Bounds.Width/2, activeTex.Bounds.Height);
+            this.origin = new Vector2(FRAME_WIDTH/2, FRAME_HEIGHT);
         }
 
         public override void Update(GameTime gameTime)
         {
             switch (mCurrentState)
             {
-
-                //case State.Jumping:
                 case State.Walking:
-                    activeTex = texWalk;
+                    activeTex = playerTextures.Walk;
                     break;
                 case State.Attacking:
-                    activeTex = texAttack;
+                    activeTex = playerTextures.Attack;
                     break;
                 case State.Dying:
-                    activeTex = texDeath;
+                    activeTex = playerTextures.Death;
                     break;
                 case State.Hurt:
-                    activeTex = texHurt;
+                    activeTex = playerTextures.Hurt;
                     break;
                 case State.Idling:
-                    activeTex = texIdle;
+                    activeTex = playerTextures.Idle;
                     break;
                 default:
-                    activeTex = texIdle;
+                    activeTex = playerTextures.Idle;
                     break;
             }
 
@@ -103,16 +102,16 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                 delayCounter = 0;
 
             }
-
+            #region Movement
             KeyboardState ks = Keyboard.GetState();
 
-            if (ks.IsKeyDown(Keys.A) && mCurrentState != State.Attacking)
+            if (ks.IsKeyDown(playerKeys.Left) && mCurrentState != State.Attacking)
             {
                 mCurrentState = State.Walking;
                 flip = SpriteEffects.FlipHorizontally;
                 velocity.X = -SPEED_FACTOR;
             }
-            else if (ks.IsKeyDown(Keys.D) && mCurrentState != State.Attacking)
+            else if (ks.IsKeyDown(playerKeys.Right) && mCurrentState != State.Attacking)
             {
                 mCurrentState = State.Walking;
                 flip = SpriteEffects.None;
@@ -123,11 +122,12 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                 velocity.X = 0;
             }
 
-            // Y
             JumpHandler(ks);
 
+            #endregion 
+
             // Attack
-            if (ks.IsKeyDown(Keys.Space) && ks != oldKeyboardState)
+            if (ks.IsKeyDown(playerKeys.Attack) && mCurrentState != State.Attacking && !oldKeyboardState.IsKeyDown(playerKeys.Attack))
             {
                 mCurrentState = State.Attacking;
                 frameCounter = 0;
@@ -142,15 +142,17 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         public override void Draw(GameTime gameTime)
         {
 
-            sb.Begin();
+            sb.Begin(SpriteSortMode.Immediate,BlendState.Opaque);
+            //sb.Begin();
             sb.Draw(activeTex, dest, frame, Color.White, 0f, origin, flip, 0);
             sb.End();
 
             base.Draw(gameTime);
         }
+
         private void JumpHandler(KeyboardState ks)
         {
-            if (ks.IsKeyDown(Keys.W) && hasJumped == false)
+            if (ks.IsKeyDown(playerKeys.Jump) && hasJumped == false)
             {
                 mCurrentState = State.Jumping;
                 velocity.Y = JUMP_FACTOR;
@@ -176,5 +178,41 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                 velocity.Y = 0f;
             }
         }
+
+        #region Collision
+
+        //protected bool IsTouchingLeft()
+        //{
+        //    return this.dest.Right + this.velocity.X > sprite.Rectangle.Left &&
+        //      this.Rectangle.Left < sprite.Rectangle.Left &&
+        //      this.Rectangle.Bottom > sprite.Rectangle.Top &&
+        //      this.Rectangle.Top < sprite.Rectangle.Bottom;
+        //}
+
+        //protected bool IsTouchingRight(Sprite sprite)
+        //{
+        //    return this.Rectangle.Left + this.Velocity.X < sprite.Rectangle.Right &&
+        //      this.Rectangle.Right > sprite.Rectangle.Right &&
+        //      this.Rectangle.Bottom > sprite.Rectangle.Top &&
+        //      this.Rectangle.Top < sprite.Rectangle.Bottom;
+        //}
+
+        //protected bool IsTouchingTop(Sprite sprite)
+        //{
+        //    return this.Rectangle.Bottom + this.Velocity.Y > sprite.Rectangle.Top &&
+        //      this.Rectangle.Top < sprite.Rectangle.Top &&
+        //      this.Rectangle.Right > sprite.Rectangle.Left &&
+        //      this.Rectangle.Left < sprite.Rectangle.Right;
+        //}
+
+        //protected bool IsTouchingBottom(Sprite sprite)
+        //{
+        //    return this.Rectangle.Top + this.Velocity.Y < sprite.Rectangle.Bottom &&
+        //      this.Rectangle.Bottom > sprite.Rectangle.Bottom &&
+        //      this.Rectangle.Right > sprite.Rectangle.Left &&
+        //      this.Rectangle.Left < sprite.Rectangle.Right;
+        //}
+        #endregion
+
     }
 }

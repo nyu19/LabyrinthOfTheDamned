@@ -2,6 +2,7 @@
 using LabyrinthOfTheDamned.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,15 +25,47 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
             sb = Shared._sb;
             components = new List<GameComponent>();
 
-            Texture2D attack = game.Content.Load<Texture2D>("images/alter/ATTACK");
-            Texture2D walk = game.Content.Load<Texture2D>("images/hero/WALK");
-            Texture2D hurt = game.Content.Load<Texture2D>("images/alter/HURT");
-            Texture2D idle = game.Content.Load<Texture2D>("images/alter/IDLE");
-            Texture2D death = game.Content.Load<Texture2D>("images/alter/DEATH");
+            KeyModel playerOneKeys = new KeyModel()
+            {
+                Attack = Keys.LeftShift,
+                Jump = Keys.W,
+                Left = Keys.A,
+                Right = Keys.D
+            };
 
+            TextureModel playerOneTexures = new TextureModel()
+            {
+                Attack = game.Content.Load<Texture2D>("images/hero/ATTACK"),
+                Walk = game.Content.Load<Texture2D>("images/hero/WALK"),
+                Hurt = game.Content.Load<Texture2D>("images/hero/HURT"),
+                Idle = game.Content.Load<Texture2D>("images/hero/IDLE"),
+                Death = game.Content.Load<Texture2D>("images/hero/DEATH")
+            };
+            
 
-            Player p1 = new Player(game, sb, walk, attack, idle, death, hurt);
+            Player p1 = new Player(game, sb, playerOneTexures, playerOneKeys);
             Components.Add(p1);
+
+            KeyModel playerTwoKeys = new KeyModel()
+            {
+                Attack = Keys.RightShift,
+                Jump = Keys.Up,
+                Left = Keys.Left,
+                Right = Keys.Right
+            };
+
+            TextureModel playerTwoTexures = new TextureModel()
+            {
+                Attack = game.Content.Load<Texture2D>("images/alter/ATTACK"),
+                Walk = game.Content.Load<Texture2D>("images/alter/WALK"),
+                Hurt = game.Content.Load<Texture2D>("images/alter/HURT"),
+                Idle = game.Content.Load<Texture2D>("images/alter/IDLE"),
+                Death = game.Content.Load<Texture2D>("images/alter/DEATH")
+            };
+            
+
+            Player p2 = new Player(game, sb, playerTwoTexures, playerTwoKeys);
+            Components.Add(p2);
 
 
         }

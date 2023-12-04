@@ -21,6 +21,7 @@ namespace LabyrinthOfTheDamned
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            Window.Title = "Labyrinth Of The Damned | Nakul Upasani and Shahyar Fida";
             _graphics.PreferredBackBufferHeight = 1000;
             _graphics.PreferredBackBufferWidth = (int)(_graphics.PreferredBackBufferHeight * 1.78);
         }
@@ -49,15 +50,10 @@ namespace LabyrinthOfTheDamned
             helpScene = new HelpScene(this);
             this.Components.Add(helpScene);
 
-
-
         }
 
         protected override void Update(GameTime gameTime)
         {
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            //    Exit();
-
             int selectedIndex = 0;
             KeyboardState ks = Keyboard.GetState();
 
@@ -96,7 +92,7 @@ namespace LabyrinthOfTheDamned
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DarkOliveGreen);
 
             // TODO: Add your drawing code here
 
