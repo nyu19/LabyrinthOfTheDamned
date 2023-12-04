@@ -3,6 +3,7 @@ using LabyrinthOfTheDamned.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,12 +17,13 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
     public class ActionScene : GameScene
     {
         SpriteBatch sb;
+        MainGame game;
         private static List<GameComponent> components;
-        public static List<GameComponent> Components { get => components; set => components = value; }
+        public static new List<GameComponent> Components { get => components; set => components = value; }
 
         public ActionScene(Game game) : base(game)
         {
-            MainGame g = (MainGame)game;
+            this.game = (MainGame)game;
             sb = Shared._sb;
             components = new List<GameComponent>();
 
@@ -97,6 +99,16 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
                 }
             }
             base.Draw(gameTime);
+        }
+
+        public override void Show()
+        {
+            MediaPlayer.Stop();
+            Song actionBgMx = game.Content.Load<Song>("sounds/actionScene");
+            MediaPlayer.Volume = 0.25f;
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(actionBgMx);
+            base.Show();
         }
     }
 }

@@ -6,6 +6,7 @@ using LabyrinthOfTheDamned.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace LabyrinthOfTheDamned
 {
@@ -50,7 +51,7 @@ namespace LabyrinthOfTheDamned
 
             helpScene = new HelpScene(this);
             this.Components.Add(helpScene);
-
+        
         }
 
         protected override void Update(GameTime gameTime)
@@ -82,6 +83,7 @@ namespace LabyrinthOfTheDamned
             {
                 if (ks.IsKeyDown(Keys.Escape))
                 {
+
                     hideAllScenes();
                     startScene.Show();
                 }

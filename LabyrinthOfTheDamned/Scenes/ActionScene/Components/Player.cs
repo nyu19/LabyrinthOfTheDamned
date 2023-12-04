@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using SharpDX.MediaFoundation;
 using SharpDX.Direct3D9;
 using LabyrinthOfTheDamned.Utility;
+using Microsoft.Xna.Framework.Audio;
 
 namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 {
@@ -26,7 +27,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
     {
         const int FRAME_HEIGHT = 288;
         const int FRAME_WIDTH = 288;
-        const int SPEED_FACTOR = 3;
+        const int SPEED_FACTOR = 7;
         const int JUMP_FACTOR = -15;
         const int GROUND_Y = 1000;
         int scaleFactor = 1;
@@ -46,6 +47,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         public State mCurrentState = State.Idling;
         Vector2 velocity;
         Rectangle hitbox;
+        SoundEffect sword, jump, damageTaken;
 
         public Rectangle DestRectangle { get => destRectangle; set => destRectangle = value; }
 
@@ -59,6 +61,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
             this.playerKeys = playerKeys;
             this.hasJumped = true;
             this.origin = new Vector2(FRAME_WIDTH / 2, FRAME_HEIGHT);
+            this.sword = game.Content.Load<SoundEffect>("sounds/sword");
         }
 
         public override void Update(GameTime gameTime)
@@ -92,7 +95,10 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
             {
                 frame.X = frameCounter * FRAME_WIDTH;
                 frameCounter++;
-
+                if (frameCounter == 3 && mCurrentState == State.Attacking)
+                {
+                    sword.Play();
+                }
                 if (frameCounter >= (activeTex.Width / FRAME_WIDTH))
                 {
                     frameCounter = 0;
@@ -168,7 +174,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                 flip = SpriteEffects.None;
                 velocity.X = SPEED_FACTOR;
             }
-            else
+            else if (mCurrentState != State.Jumping || mCurrentState != State.Attacking)
             {
                 velocity.X = 0;
             }
