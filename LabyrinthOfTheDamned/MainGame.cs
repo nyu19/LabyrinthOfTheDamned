@@ -16,6 +16,7 @@ namespace LabyrinthOfTheDamned
         public StartScene startScene;
         public ActionScene actionScene;
         public HelpScene helpScene;
+
         public MainGame()
         {
             _graphics = new GraphicsDeviceManager(this);

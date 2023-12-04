@@ -12,7 +12,7 @@ using LabyrinthOfTheDamned.Utility;
 
 namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 {
-    enum State
+    public enum State
     {
         Jumping,
         Walking,
@@ -27,7 +27,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         const int FRAME_HEIGHT = 288;
         const int FRAME_WIDTH = 288;
         const int SPEED_FACTOR = 3;
-        const int JUMP_FACTOR = -10;
+        const int JUMP_FACTOR = -15;
         const int GROUND_Y = 1000;
         int scaleFactor = 1;
         SpriteBatch sb;
@@ -39,24 +39,26 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         Texture2D activeTex;
         int frameCounter = 0;
         Rectangle frame = new Rectangle(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-        Rectangle dest;
+        Rectangle destRectangle;
         MainGame game;
         KeyboardState oldKeyboardState;
-        SpriteEffects flip = SpriteEffects.None;
-        State mCurrentState = State.Idling;
+        public SpriteEffects flip = SpriteEffects.None;
+        public State mCurrentState = State.Idling;
         Vector2 velocity;
         Rectangle hitbox;
 
-        public Player(Game game, SpriteBatch sb, TextureModel playerTextures, KeyModel playerKeys) : base(game)
+        public Rectangle DestRectangle { get => destRectangle; set => destRectangle = value; }
+
+        public Player(Game game, SpriteBatch sb,Vector2 startingPosition, TextureModel playerTextures, KeyModel playerKeys) : base(game)
         {
-            this.game = (MainGame) game;
+            this.game = (MainGame)game;
             this.sb = sb;
-            dest = new Rectangle((int)Shared.stageSize.X/2, GROUND_Y, FRAME_WIDTH * scaleFactor, FRAME_HEIGHT * scaleFactor);
+            this.destRectangle = new Rectangle((int)startingPosition.X,(int)startingPosition.Y, FRAME_WIDTH * scaleFactor, FRAME_HEIGHT * scaleFactor);
             this.playerTextures = playerTextures;
             this.activeTex = playerTextures.Hurt;
             this.playerKeys = playerKeys;
-            hasJumped = true;
-            this.origin = new Vector2(FRAME_WIDTH/2, FRAME_HEIGHT);
+            this.hasJumped = true;
+            this.origin = new Vector2(FRAME_WIDTH / 2, FRAME_HEIGHT);
         }
 
         public override void Update(GameTime gameTime)
@@ -102,27 +104,29 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                 delayCounter = 0;
 
             }
+
             #region Movement
             KeyboardState ks = Keyboard.GetState();
 
-            if (ks.IsKeyDown(playerKeys.Left) && mCurrentState != State.Attacking)
+            XMovementHandler(ks);
+            JumpHandler(ks);
+
+            foreach (GameComponent item in ActionScene.Components)
             {
-                mCurrentState = State.Walking;
-                flip = SpriteEffects.FlipHorizontally;
-                velocity.X = -SPEED_FACTOR;
-            }
-            else if (ks.IsKeyDown(playerKeys.Right) && mCurrentState != State.Attacking)
-            {
-                mCurrentState = State.Walking;
-                flip = SpriteEffects.None;
-                velocity.X = SPEED_FACTOR;
-            }
-            else
-            {
-                velocity.X = 0;
+                if (item == this || item is not Player)
+                    continue;
+                Player sprite = item as Player;
+                if ((this.velocity.X > 0 && this.IsTouchingLeft(sprite)) ||
+                    (this.velocity.X < 0 & this.IsTouchingRight(sprite)))
+                    this.velocity.X = 0;
+
+                if ((this.velocity.Y > 0 && this.IsTouchingTop(sprite)) ||
+                    (this.velocity.Y < 0 & this.IsTouchingBottom(sprite)))
+                    this.velocity.Y = 0;
             }
 
-            JumpHandler(ks);
+            destRectangle.X += (int)velocity.X;
+            destRectangle.Y += (int)velocity.Y;
 
             #endregion 
 
@@ -142,77 +146,100 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         public override void Draw(GameTime gameTime)
         {
 
-            sb.Begin(SpriteSortMode.Immediate,BlendState.Opaque);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
             //sb.Begin();
-            sb.Draw(activeTex, dest, frame, Color.White, 0f, origin, flip, 0);
+            sb.Draw(activeTex, DestRectangle, frame, Color.White, 0f, origin, flip, 0);
             sb.End();
 
             base.Draw(gameTime);
         }
 
-        private void JumpHandler(KeyboardState ks)
+        private void XMovementHandler(KeyboardState ks)
         {
-            if (ks.IsKeyDown(playerKeys.Jump) && hasJumped == false)
+
+            if (ks.IsKeyDown(playerKeys.Left) && mCurrentState != State.Attacking)
             {
-                mCurrentState = State.Jumping;
-                velocity.Y = JUMP_FACTOR;
-                hasJumped = true;
+                mCurrentState = State.Walking;
+                flip = SpriteEffects.FlipHorizontally;
+                velocity.X = -SPEED_FACTOR;
+            }
+            else if (ks.IsKeyDown(playerKeys.Right) && mCurrentState != State.Attacking)
+            {
+                mCurrentState = State.Walking;
+                flip = SpriteEffects.None;
+                velocity.X = SPEED_FACTOR;
+            }
+            else
+            {
+                velocity.X = 0;
             }
 
-            dest.X += (int)velocity.X;
-            dest.Y += (int)velocity.Y;
+        }
 
-            if (hasJumped == true)
+        private void JumpHandler(KeyboardState ks)
+        {
+            if (hasJumped)
             {
                 float i = 2;
                 velocity.Y += 0.15f * i;
             }
 
-            if (dest.Y >= GROUND_Y) // TODO: Replace with hitbox
+            if (DestRectangle.Y >= GROUND_Y) // TODO: Replace with hitbox
             {
                 hasJumped = false;
             }
 
-            if (hasJumped == false)
+            if (!hasJumped)
             {
                 velocity.Y = 0f;
             }
+
+            if (ks.IsKeyDown(playerKeys.Jump) && hasJumped == false) // starts from here
+            {
+                mCurrentState = State.Jumping;
+                velocity.Y = JUMP_FACTOR;
+                hasJumped = true;
+            }
+            
         }
+
 
         #region Collision
 
-        //protected bool IsTouchingLeft()
-        //{
-        //    return this.dest.Right + this.velocity.X > sprite.Rectangle.Left &&
-        //      this.Rectangle.Left < sprite.Rectangle.Left &&
-        //      this.Rectangle.Bottom > sprite.Rectangle.Top &&
-        //      this.Rectangle.Top < sprite.Rectangle.Bottom;
-        //}
+        protected bool IsTouchingLeft(Player dgc)
+        {
+            return destRectangle.Right + this.velocity.X > dgc.DestRectangle.Left &&
+              destRectangle.Left < dgc.DestRectangle.Left &&
+              destRectangle.Bottom > dgc.DestRectangle.Top &&
+              destRectangle.Top < dgc.DestRectangle.Bottom;
+        }
 
-        //protected bool IsTouchingRight(Sprite sprite)
-        //{
-        //    return this.Rectangle.Left + this.Velocity.X < sprite.Rectangle.Right &&
-        //      this.Rectangle.Right > sprite.Rectangle.Right &&
-        //      this.Rectangle.Bottom > sprite.Rectangle.Top &&
-        //      this.Rectangle.Top < sprite.Rectangle.Bottom;
-        //}
+        protected bool IsTouchingRight(Player dgc)
+        {
+            return destRectangle.Left + this.velocity.X < dgc.DestRectangle.Right &&
+              destRectangle.Right > dgc.DestRectangle.Right &&
+              destRectangle.Bottom > dgc.DestRectangle.Top &&
+              destRectangle.Top < dgc.DestRectangle.Bottom;
+        }
 
-        //protected bool IsTouchingTop(Sprite sprite)
-        //{
-        //    return this.Rectangle.Bottom + this.Velocity.Y > sprite.Rectangle.Top &&
-        //      this.Rectangle.Top < sprite.Rectangle.Top &&
-        //      this.Rectangle.Right > sprite.Rectangle.Left &&
-        //      this.Rectangle.Left < sprite.Rectangle.Right;
-        //}
+        protected bool IsTouchingTop(Player dgc)
+        {
+            return destRectangle.Bottom + this.velocity.Y > dgc.DestRectangle.Top &&
+              destRectangle.Top < dgc.DestRectangle.Top &&
+              destRectangle.Right > dgc.DestRectangle.Left &&
+              destRectangle.Left < dgc.DestRectangle.Right;
+        }
 
-        //protected bool IsTouchingBottom(Sprite sprite)
-        //{
-        //    return this.Rectangle.Top + this.Velocity.Y < sprite.Rectangle.Bottom &&
-        //      this.Rectangle.Bottom > sprite.Rectangle.Bottom &&
-        //      this.Rectangle.Right > sprite.Rectangle.Left &&
-        //      this.Rectangle.Left < sprite.Rectangle.Right;
-        //}
+        protected bool IsTouchingBottom(Player dgc)
+        {
+            return destRectangle.Top + this.velocity.Y < dgc.DestRectangle.Bottom &&
+              destRectangle.Bottom > dgc.DestRectangle.Bottom &&
+              destRectangle.Right > dgc.DestRectangle.Left &&
+              destRectangle.Left < dgc.DestRectangle.Right;
+        }
         #endregion
+
+
 
     }
 }

@@ -16,8 +16,8 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
     public class ActionScene : GameScene
     {
         SpriteBatch sb;
-        private List<GameComponent> components;
-        public List<GameComponent> Components { get => components; set => components = value; }
+        private static List<GameComponent> components;
+        public static List<GameComponent> Components { get => components; set => components = value; }
 
         public ActionScene(Game game) : base(game)
         {
@@ -43,8 +43,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
             };
             
 
-            Player p1 = new Player(game, sb, playerOneTexures, playerOneKeys);
-            Components.Add(p1);
+            Player p1 = new Player(game, sb, new Vector2(Shared.stageSize.X/4,Shared.stageSize.Y), playerOneTexures, playerOneKeys);
 
             KeyModel playerTwoKeys = new KeyModel()
             {
@@ -63,10 +62,12 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
                 Death = game.Content.Load<Texture2D>("images/alter/DEATH")
             };
             
-
-            Player p2 = new Player(game, sb, playerTwoTexures, playerTwoKeys);
+            Player p2 = new Player(game, sb, new Vector2(Shared.stageSize.X - (Shared.stageSize.X / 4), Shared.stageSize.Y), playerTwoTexures, playerTwoKeys);
+            p2.flip = SpriteEffects.FlipHorizontally;
+            
+            
+            Components.Add(p1);
             Components.Add(p2);
-
 
         }
 
