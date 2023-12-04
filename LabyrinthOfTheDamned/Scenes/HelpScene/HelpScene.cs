@@ -18,13 +18,24 @@ namespace LabyrinthOfTheDamned.Scenes.HelpScene
         {
             Game g = (MainGame)game;
             sb = Shared._sb;
-            
+            LoadContent();
+
+        }
+
+        protected override void LoadContent()
+        {
+            texture = Game.Content.Load<Texture2D>("images/Scenes/Controls");
+            base.LoadContent();
         }
 
         public override void Draw(GameTime gameTime)
         {
             sb.Begin();
-            sb.Draw(texture, Vector2.Zero, Color.White);
+            if(texture != null)
+            {
+                sb.Draw(texture, Vector2.Zero, Color.White);
+
+            }
             sb.End();
 
             base.Draw(gameTime);

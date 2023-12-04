@@ -1,5 +1,6 @@
 ﻿using LabyrinthOfTheDamned.Scenes;
 using LabyrinthOfTheDamned.Scenes.ActionScene;
+using LabyrinthOfTheDamned.Scenes.CreditScene;
 using LabyrinthOfTheDamned.Scenes.HelpScene;
 using LabyrinthOfTheDamned.Scenes.StartScene;
 using LabyrinthOfTheDamned.Utility;
@@ -16,7 +17,7 @@ namespace LabyrinthOfTheDamned
         public StartScene startScene;
         public ActionScene actionScene;
         public HelpScene helpScene;
-
+        public CreditScene creditScene;
         public MainGame()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -51,6 +52,11 @@ namespace LabyrinthOfTheDamned
             helpScene = new HelpScene(this);
             this.Components.Add(helpScene);
 
+
+
+            creditScene = new CreditScene(this);
+            this.Components.Add(creditScene);
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -71,6 +77,16 @@ namespace LabyrinthOfTheDamned
                 {
                     hideAllScenes();
                     helpScene.Show();
+                }
+                if(selectedIndex == 2 && ks.IsKeyDown(Keys.Enter))
+                { 
+                    hideAllScenes();
+                
+                }
+                if (selectedIndex == 3 && ks.IsKeyDown(Keys.Enter))
+                {
+                    hideAllScenes();
+                    creditScene.Show();
                 }
                 else if (selectedIndex == 4 && ks.IsKeyDown(Keys.Enter))
                 {

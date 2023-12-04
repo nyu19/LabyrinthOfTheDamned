@@ -13,6 +13,30 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin C:/Users/sheisty/Documents/Game Stuff/Controls.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:C:/Users/sheisty/Documents/Game Stuff/Controls.jpg;images/Scenes/Controls.jpg
+
+#begin C:/Users/sheisty/Documents/Game Stuff/Credits.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:C:/Users/sheisty/Documents/Game Stuff/Credits.jpg;images/Scenes/Credits.jpg
+
 #begin fonts/HighlightFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
