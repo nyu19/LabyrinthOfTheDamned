@@ -21,7 +21,7 @@ namespace LabyrinthOfTheDamned
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            _graphics.PreferredBackBufferHeight = 700;
+            _graphics.PreferredBackBufferHeight = 1000;
             _graphics.PreferredBackBufferWidth = (int)(_graphics.PreferredBackBufferHeight * 1.78);
         }
 
