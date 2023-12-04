@@ -120,9 +120,9 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                     (this.velocity.X < 0 & this.IsTouchingRight(sprite)))
                     this.velocity.X = 0;
 
-                if ((this.velocity.Y > 0 && this.IsTouchingTop(sprite)) ||
-                    (this.velocity.Y < 0 & this.IsTouchingBottom(sprite)))
-                    this.velocity.Y = 0;
+                //if ((this.velocity.Y > 0 && this.IsTouchingTop(sprite)))
+                //    this.velocity.Y = 0;
+                
             }
 
             destRectangle.X += (int)velocity.X;
@@ -146,8 +146,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         public override void Draw(GameTime gameTime)
         {
 
-            sb.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
-            //sb.Begin();
+            sb.Begin();
             sb.Draw(activeTex, DestRectangle, frame, Color.White, 0f, origin, flip, 0);
             sb.End();
 
@@ -206,36 +205,42 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 
         #region Collision
 
+        const int LeftMargin = 110;
+        const int RightMargin = 288 - 180;
+        const int TopMargin = 88;
+        const int BottomMargin = 288 - 195;
+
+
         protected bool IsTouchingLeft(Player dgc)
         {
-            return destRectangle.Right + this.velocity.X > dgc.DestRectangle.Left &&
-              destRectangle.Left < dgc.DestRectangle.Left &&
-              destRectangle.Bottom > dgc.DestRectangle.Top &&
-              destRectangle.Top < dgc.DestRectangle.Bottom;
+            return destRectangle.Right - RightMargin > dgc.DestRectangle.Left + LeftMargin&&
+              destRectangle.Left + LeftMargin < dgc.DestRectangle.Left + LeftMargin &&
+              destRectangle.Bottom - BottomMargin > dgc.DestRectangle.Top + TopMargin &&
+              destRectangle.Top + TopMargin < dgc.DestRectangle.Bottom - BottomMargin;
         }
 
         protected bool IsTouchingRight(Player dgc)
         {
-            return destRectangle.Left + this.velocity.X < dgc.DestRectangle.Right &&
-              destRectangle.Right > dgc.DestRectangle.Right &&
-              destRectangle.Bottom > dgc.DestRectangle.Top &&
-              destRectangle.Top < dgc.DestRectangle.Bottom;
+            return destRectangle.Left + LeftMargin < dgc.DestRectangle.Right - RightMargin &&
+              destRectangle.Right - RightMargin > dgc.DestRectangle.Right - RightMargin &&
+              destRectangle.Bottom - BottomMargin > dgc.DestRectangle.Top + TopMargin &&
+              destRectangle.Top + TopMargin < dgc.DestRectangle.Bottom - BottomMargin;
         }
 
         protected bool IsTouchingTop(Player dgc)
         {
-            return destRectangle.Bottom + this.velocity.Y > dgc.DestRectangle.Top &&
-              destRectangle.Top < dgc.DestRectangle.Top &&
-              destRectangle.Right > dgc.DestRectangle.Left &&
-              destRectangle.Left < dgc.DestRectangle.Right;
+            return destRectangle.Bottom - BottomMargin > dgc.DestRectangle.Top + TopMargin &&
+              destRectangle.Top + TopMargin < dgc.DestRectangle.Top + TopMargin &&
+              destRectangle.Right - RightMargin > dgc.DestRectangle.Left + LeftMargin &&
+              destRectangle.Left + LeftMargin < dgc.DestRectangle.Right - RightMargin;
         }
 
         protected bool IsTouchingBottom(Player dgc)
         {
-            return destRectangle.Top + this.velocity.Y < dgc.DestRectangle.Bottom &&
-              destRectangle.Bottom > dgc.DestRectangle.Bottom &&
-              destRectangle.Right > dgc.DestRectangle.Left &&
-              destRectangle.Left < dgc.DestRectangle.Right;
+            return destRectangle.Top + TopMargin < dgc.DestRectangle.Bottom - BottomMargin &&
+              destRectangle.Bottom - BottomMargin > dgc.DestRectangle.Bottom - BottomMargin &&
+              destRectangle.Right - RightMargin > dgc.DestRectangle.Left + LeftMargin &&
+              destRectangle.Left + LeftMargin < dgc.DestRectangle.Right - RightMargin;
         }
         #endregion
 
