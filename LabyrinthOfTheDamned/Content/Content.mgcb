@@ -183,3 +183,21 @@
 /processorParam:TextureFormat=Color
 /build:images/Scenes/HighScore.jpg
 
+#begin sounds/actionscene.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sounds/actionscene.mp3
+
+#begin sounds/startscene.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sounds/startscene.mp3
+
+#begin sounds/sword.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/sword.wav
+

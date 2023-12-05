@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace LabyrinthOfTheDamned.Scenes
     {
         private List<GameComponent> components;
         public List<GameComponent> Components { get => components; set => components = value; }
+        protected Song bgMusic;
 
         public virtual void Show()
         {
