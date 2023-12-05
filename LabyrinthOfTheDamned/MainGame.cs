@@ -99,7 +99,7 @@ namespace LabyrinthOfTheDamned
                 }
             }
 
-            if (actionScene.Enabled || helpScene.Enabled)
+            if (actionScene.Enabled || helpScene.Enabled || highscoreScene.Enabled || creditScene.)
             {
                 if (ks.IsKeyDown(Keys.Escape))
                 {
