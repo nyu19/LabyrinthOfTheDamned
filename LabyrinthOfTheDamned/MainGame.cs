@@ -2,6 +2,7 @@
 using LabyrinthOfTheDamned.Scenes.ActionScene;
 using LabyrinthOfTheDamned.Scenes.CreditScene;
 using LabyrinthOfTheDamned.Scenes.HelpScene;
+using LabyrinthOfTheDamned.Scenes.HighScoreScene;
 using LabyrinthOfTheDamned.Scenes.StartScene;
 using LabyrinthOfTheDamned.Utility;
 using Microsoft.Xna.Framework;
@@ -16,6 +17,7 @@ namespace LabyrinthOfTheDamned
         private SpriteBatch _spriteBatch;
         public StartScene startScene;
         public ActionScene actionScene;
+        public HighScoreScene highscoreScene;
         public HelpScene helpScene;
         public CreditScene creditScene;
         public MainGame()
@@ -52,6 +54,8 @@ namespace LabyrinthOfTheDamned
             helpScene = new HelpScene(this);
             this.Components.Add(helpScene);
 
+            highscoreScene = new HighScoreScene(this);
+            this.Components.Add(highscoreScene);
 
 
             creditScene = new CreditScene(this);
@@ -81,6 +85,7 @@ namespace LabyrinthOfTheDamned
                 if(selectedIndex == 2 && ks.IsKeyDown(Keys.Enter))
                 { 
                     hideAllScenes();
+                    highscoreScene.Show();
                 
                 }
                 if (selectedIndex == 3 && ks.IsKeyDown(Keys.Enter))
