@@ -30,6 +30,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         const int SPEED_FACTOR = 7;
         const int JUMP_FACTOR = -15;
         const int GROUND_Y = 1000;
+        const int STARTING_HEALTH = 100;
         int scaleFactor = 1;
         SpriteBatch sb;
         double delay, delayCounter;
@@ -46,26 +47,44 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         public SpriteEffects flip = SpriteEffects.None;
         public State mCurrentState = State.Idling;
         Vector2 velocity;
-        Rectangle hitbox;
         SoundEffect sword, jump, damageTaken;
+        int playerHealth;
+        public bool isDead { get { return playerHealth <= 0; } }
+        public Rectangle Hitbox
+        {
+            get {
+                return new Rectangle(DestRectangle.Left + LEFT_MARGIN, DestRectangle.Top + TOP_MARGIN, 93, 108);
+            }
+        }
 
         public Rectangle DestRectangle { get => destRectangle; set => destRectangle = value; }
 
-        public Player(Game game, SpriteBatch sb,Vector2 startingPosition, TextureModel playerTextures, KeyModel playerKeys) : base(game)
+        public Player(Game game, SpriteBatch sb, Vector2 startingPosition, TextureModel playerTextures, KeyModel playerKeys) : base(game)
         {
             this.game = (MainGame)game;
             this.sb = sb;
-            this.destRectangle = new Rectangle((int)startingPosition.X,(int)startingPosition.Y, FRAME_WIDTH * scaleFactor, FRAME_HEIGHT * scaleFactor);
+            this.destRectangle = new Rectangle((int)startingPosition.X, (int)startingPosition.Y, FRAME_WIDTH * scaleFactor, FRAME_HEIGHT * scaleFactor);
             this.playerTextures = playerTextures;
             this.activeTex = playerTextures.Hurt;
             this.playerKeys = playerKeys;
             this.hasJumped = true;
             this.origin = new Vector2(FRAME_WIDTH / 2, FRAME_HEIGHT);
             this.sword = game.Content.Load<SoundEffect>("sounds/sword");
+            playerHealth = STARTING_HEALTH;
         }
 
         public override void Update(GameTime gameTime)
         {
+
+            if (playerHealth <= 0)
+            {
+                mCurrentState = State.Dying;
+                if (!isDead)
+                {
+                    frameCounter = 0;
+                    delayCounter = 0;
+                }
+            }
             switch (mCurrentState)
             {
                 case State.Walking:
@@ -87,7 +106,9 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                     activeTex = playerTextures.Idle;
                     break;
             }
+
             #region Frames
+            
             delay = 100 * 0.167 * (activeTex.Width / FRAME_WIDTH);
             delayCounter += gameTime.ElapsedGameTime.TotalMilliseconds;
 
@@ -111,6 +132,14 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                 }
                 delayCounter = 0;
 
+                if (frameCounter >= (playerTextures.Death.Width / FRAME_WIDTH)-1 && mCurrentState == State.Dying)
+                {
+                    ActionScene.gameEnded = true;
+                }
+            }
+            if (isDead)
+            {
+                return;
             }
             #endregion
 
@@ -122,7 +151,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 
             foreach (GameComponent item in ActionScene.Components)
             {
-                if (item == this || item is not Player)
+                if (item == this || item is not Player )
                     continue;
                 Player sprite = item as Player;
                 if ((this.velocity.X > 0 && this.IsTouchingLeft(sprite)) ||
@@ -131,9 +160,8 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 
                 //if ((this.velocity.Y > 0 && this.IsTouchingTop(sprite)))
                 //    this.velocity.Y = 0;
-                
-            }
 
+            }
             destRectangle.X += (int)velocity.X;
             destRectangle.Y += (int)velocity.Y;
 
@@ -159,7 +187,8 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         {
 
             sb.Begin();
-            sb.Draw(activeTex, DestRectangle, frame, Color.White, 0f, origin, flip, 0);
+            if (Enabled)
+                sb.Draw(activeTex, DestRectangle, frame, Color.White, 0f, origin, flip, 0);
             sb.End();
 
             base.Draw(gameTime);

@@ -18,6 +18,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
     {
         MainGame game;
         SpriteBatch sb;
+        public static bool gameEnded;
         private static List<GameComponent> components;
         public static new List<GameComponent> Components { get => components; set => components = value; }
 
@@ -97,8 +98,14 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
                 {
                     item.Update(gameTime);
                 }
+                if (gameEnded && item is Player)
+                {
+                    ((Player)item).Enabled = false;
+                    ((Player)item).Dispose();
+                }
             }
             base.Draw(gameTime);
+
         }
 
         public override void Show()

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,24 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
     {
         private void ManageHealth()
         {
-            // Implementing!
+            // Add health deduction multipler
+            foreach (GameComponent item in ActionScene.Components)
+            {
+                if (item == this || item is not Player)
+                    continue;
+
+                Player otherPlayer = (Player)item;
+                Rectangle p1 = this.Hitbox;
+                p1.Inflate(10, 10); 
+                Rectangle p2 = otherPlayer.Hitbox;
+                p2.Inflate(10, 10); 
+
+                if (p1.Intersects(p2) && this.IsFacing(otherPlayer) && this.frameCounter == 6 && this.mCurrentState == State.Attacking)
+                {
+                    otherPlayer.playerHealth -= 5;
+                }
+            }
+
         }
 
 
@@ -68,41 +86,53 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 
         #region Collision
 
-        const int LeftMargin = 110;
-        const int RightMargin = 288 - 180;
-        const int TopMargin = 88;
-        const int BottomMargin = 288 - 195;
+        const int LEFT_MARGIN = 110;
+        const int RIGHT_MARGIN = 288 - 180;
+        const int TOP_MARGIN = 88;
+        const int BOTTOM_MARGIN = 288 - 195;
 
         protected bool IsTouchingLeft(Player dgc)
         {
-            return destRectangle.Right - RightMargin > dgc.DestRectangle.Left + LeftMargin &&
-              destRectangle.Left + LeftMargin < dgc.DestRectangle.Left + LeftMargin &&
-              destRectangle.Bottom - BottomMargin > dgc.DestRectangle.Top + TopMargin &&
-              destRectangle.Top + TopMargin < dgc.DestRectangle.Bottom - BottomMargin;
+            return destRectangle.Right - RIGHT_MARGIN > dgc.DestRectangle.Left + LEFT_MARGIN &&
+              destRectangle.Left + LEFT_MARGIN < dgc.DestRectangle.Left + LEFT_MARGIN &&
+              destRectangle.Bottom - BOTTOM_MARGIN > dgc.DestRectangle.Top + TOP_MARGIN &&
+              destRectangle.Top + TOP_MARGIN < dgc.DestRectangle.Bottom - BOTTOM_MARGIN;
         }
 
         protected bool IsTouchingRight(Player dgc)
         {
-            return destRectangle.Left + LeftMargin < dgc.DestRectangle.Right - RightMargin &&
-              destRectangle.Right - RightMargin > dgc.DestRectangle.Right - RightMargin &&
-              destRectangle.Bottom - BottomMargin > dgc.DestRectangle.Top + TopMargin &&
-              destRectangle.Top + TopMargin < dgc.DestRectangle.Bottom - BottomMargin;
+            return destRectangle.Left + LEFT_MARGIN < dgc.DestRectangle.Right - RIGHT_MARGIN &&
+              destRectangle.Right - RIGHT_MARGIN > dgc.DestRectangle.Right - RIGHT_MARGIN &&
+              destRectangle.Bottom - BOTTOM_MARGIN > dgc.DestRectangle.Top + TOP_MARGIN &&
+              destRectangle.Top + TOP_MARGIN < dgc.DestRectangle.Bottom - BOTTOM_MARGIN;
         }
 
         protected bool IsTouchingTop(Player dgc)
         {
-            return destRectangle.Bottom - BottomMargin > dgc.DestRectangle.Top + TopMargin &&
-              destRectangle.Top + TopMargin < dgc.DestRectangle.Top + TopMargin &&
-              destRectangle.Right - RightMargin > dgc.DestRectangle.Left + LeftMargin &&
-              destRectangle.Left + LeftMargin < dgc.DestRectangle.Right - RightMargin;
+            return destRectangle.Bottom - BOTTOM_MARGIN > dgc.DestRectangle.Top + TOP_MARGIN &&
+              destRectangle.Top + TOP_MARGIN < dgc.DestRectangle.Top + TOP_MARGIN &&
+              destRectangle.Right - RIGHT_MARGIN > dgc.DestRectangle.Left + LEFT_MARGIN &&
+              destRectangle.Left + LEFT_MARGIN < dgc.DestRectangle.Right - RIGHT_MARGIN;
         }
 
         protected bool IsTouchingBottom(Player dgc)
         {
-            return destRectangle.Top + TopMargin < dgc.DestRectangle.Bottom - BottomMargin &&
-              destRectangle.Bottom - BottomMargin > dgc.DestRectangle.Bottom - BottomMargin &&
-              destRectangle.Right - RightMargin > dgc.DestRectangle.Left + LeftMargin &&
-              destRectangle.Left + LeftMargin < dgc.DestRectangle.Right - RightMargin;
+            return destRectangle.Top + TOP_MARGIN < dgc.DestRectangle.Bottom - BOTTOM_MARGIN &&
+              destRectangle.Bottom - BOTTOM_MARGIN > dgc.DestRectangle.Bottom - BOTTOM_MARGIN &&
+              destRectangle.Right - RIGHT_MARGIN > dgc.DestRectangle.Left + LEFT_MARGIN &&
+              destRectangle.Left + LEFT_MARGIN < dgc.DestRectangle.Right - RIGHT_MARGIN;
+        }
+
+        protected bool IsFacing(Player dgc)
+        {
+            return (this.Hitbox.Left < dgc.Hitbox.Left && this.flip == SpriteEffects.None) ||
+                (this.Hitbox.Left > dgc.Hitbox.Left && this.flip == SpriteEffects.FlipHorizontally);
+        }
+
+        protected bool IsLeveled(Player dgc)
+        {
+            return ((this.Hitbox.Top + this.Hitbox.Bottom)/2 >= dgc.Hitbox.Top ) ||
+                ((this.Hitbox.Top + this.Hitbox.Bottom) / 2 <= dgc.Hitbox.Bottom);
         }
         #endregion
 
