@@ -36,7 +36,5 @@ namespace LabyrinthOfTheDamned.Scenes.StartScene
 
             base.Show();
         }
-
-
     }
 }
