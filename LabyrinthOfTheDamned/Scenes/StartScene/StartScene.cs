@@ -15,6 +15,7 @@ namespace LabyrinthOfTheDamned.Scenes.StartScene
         public MenuComponent Menu { get; set; }
         private SpriteBatch sb;
         string[] menuItems = { "Start Game", "Help", "High Score", "Credit", "Quit" };
+        public TimeSpan MusicSpan { get; set; } = TimeSpan.Zero;
         public StartScene(Game game) : base(game)
         {
             this.game = (MainGame)game;
@@ -28,12 +29,14 @@ namespace LabyrinthOfTheDamned.Scenes.StartScene
         }
         public override void Show()
         {
-            MediaPlayer.Stop();
             Song actionBgMx = game.Content.Load<Song>("sounds/startScene");
-            MediaPlayer.Volume = 0.25f;
+            MediaPlayer.Volume = 0.5f;
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(actionBgMx);
+            MediaPlayer.Play(actionBgMx,MusicSpan);
+
             base.Show();
         }
+
+
     }
 }

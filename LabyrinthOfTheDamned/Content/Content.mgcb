@@ -189,6 +189,12 @@
 /processorParam:Quality=Best
 /build:sounds/actionscene.mp3
 
+#begin sounds/interface.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/interface.wav
+
 #begin sounds/startscene.mp3
 /importer:Mp3Importer
 /processor:SongProcessor

@@ -31,11 +31,7 @@ namespace LabyrinthOfTheDamned.Scenes.HelpScene
         public override void Draw(GameTime gameTime)
         {
             sb.Begin();
-            if(texture != null)
-            {
-                sb.Draw(texture, Vector2.Zero, Color.White);
-
-            }
+            sb.Draw(texture,new Rectangle(0,0,(int)Shared.stageSize.X,(int)Shared.stageSize.Y),Color.White);
             sb.End();
 
             base.Draw(gameTime);

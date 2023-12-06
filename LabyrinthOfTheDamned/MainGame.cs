@@ -8,6 +8,7 @@ using LabyrinthOfTheDamned.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace LabyrinthOfTheDamned
 {
@@ -61,6 +62,7 @@ namespace LabyrinthOfTheDamned
             creditScene = new CreditScene(this);
             this.Components.Add(creditScene);
 
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -99,10 +101,15 @@ namespace LabyrinthOfTheDamned
                 }
             }
 
-            if (actionScene.Enabled || helpScene.Enabled || highscoreScene.Enabled || creditScene.)
+            if (actionScene.Enabled || helpScene.Enabled || highscoreScene.Enabled || creditScene.Enabled)
             {
                 if (ks.IsKeyDown(Keys.Escape))
                 {
+                    if (actionScene.Enabled)
+                    {
+                        MediaPlayer.Stop();
+                    }
+                    startScene.MusicSpan = MediaPlayer.PlayPosition;
                     hideAllScenes();
                     startScene.Show();
                 }
