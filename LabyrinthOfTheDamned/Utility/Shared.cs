@@ -12,5 +12,6 @@ namespace LabyrinthOfTheDamned.Utility
     {
         public static Vector2 stageSize;
         public static SpriteBatch _sb;
+        public static SpriteFont regularFonts, highlightFonts;
     }
 }

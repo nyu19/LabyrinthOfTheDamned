@@ -30,7 +30,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
 
             KeyModel playerOneKeys = new KeyModel()
             {
-                Attack = Keys.LeftShift,
+                Attack = Keys.F,
                 Jump = Keys.W,
                 Left = Keys.A,
                 Right = Keys.D
@@ -50,7 +50,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
 
             KeyModel playerTwoKeys = new KeyModel()
             {
-                Attack = Keys.RightShift,
+                Attack = Keys.RightControl,
                 Jump = Keys.Up,
                 Left = Keys.Left,
                 Right = Keys.Right
@@ -67,10 +67,15 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
             
             Player p2 = new Player(game, sb, new Vector2(Shared.stageSize.X - (Shared.stageSize.X / 4), Shared.stageSize.Y), playerTwoTexures, playerTwoKeys);
             p2.flip = SpriteEffects.FlipHorizontally;
-            
-            
-            Components.Add(p1);
+
+            HealthManager h1 = new HealthManager(game, p1, new Vector2(10, 10), Position.Left);
+            HealthManager h2 = new HealthManager(game, p2, new Vector2(10, 10), Position.Right);
+
+
             Components.Add(p2);
+            Components.Add(h2);
+            Components.Add(p1);
+            Components.Add(h1);
 
         }
 

@@ -20,14 +20,23 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                     continue;
 
                 Player otherPlayer = (Player)item;
+                
                 Rectangle p1 = this.Hitbox;
-                p1.Inflate(10, 10); 
                 Rectangle p2 = otherPlayer.Hitbox;
+                
+                if (p1.Intersects(p2) && this.IsFacing(otherPlayer) && this.frameCounter == 6 && this.mCurrentState == State.Attacking)
+                {
+                    otherPlayer.PlayerHealth -= 3;
+                    mCurrentState = State.Hurt;
+                }
+
+                p1.Inflate(10, 10); 
                 p2.Inflate(10, 10); 
 
                 if (p1.Intersects(p2) && this.IsFacing(otherPlayer) && this.frameCounter == 6 && this.mCurrentState == State.Attacking)
                 {
-                    otherPlayer.playerHealth -= 5;
+                    otherPlayer.PlayerHealth -= 2;
+                    mCurrentState = State.Hurt;
                 }
             }
 

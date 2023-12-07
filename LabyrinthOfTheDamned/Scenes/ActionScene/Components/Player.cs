@@ -49,7 +49,8 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         Vector2 velocity;
         SoundEffect sword, jump, damageTaken;
         int playerHealth;
-        public bool isDead { get { return playerHealth <= 0; } }
+
+        public bool isDead { get { return PlayerHealth <= 0; } }
         public Rectangle Hitbox
         {
             get {
@@ -58,6 +59,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         }
 
         public Rectangle DestRectangle { get => destRectangle; set => destRectangle = value; }
+        public int PlayerHealth { get => playerHealth; set => playerHealth = value; }
 
         public Player(Game game, SpriteBatch sb, Vector2 startingPosition, TextureModel playerTextures, KeyModel playerKeys) : base(game)
         {
@@ -70,13 +72,13 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
             this.hasJumped = true;
             this.origin = new Vector2(FRAME_WIDTH / 2, FRAME_HEIGHT);
             this.sword = game.Content.Load<SoundEffect>("sounds/sword");
-            playerHealth = STARTING_HEALTH;
+            PlayerHealth = STARTING_HEALTH;
         }
 
         public override void Update(GameTime gameTime)
         {
 
-            if (playerHealth <= 0)
+            if (PlayerHealth <= 0)
             {
                 mCurrentState = State.Dying;
                 if (!isDead)

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Media;
+using LabyrinthOfTheDamned.Utility;
 
 namespace LabyrinthOfTheDamned.Scenes.StartScene
 {
@@ -20,10 +21,7 @@ namespace LabyrinthOfTheDamned.Scenes.StartScene
         {
             this.game = (MainGame)game;
 
-            SpriteFont regularFont = game.Content.Load<SpriteFont>("fonts/RegularFont");
-            SpriteFont highlightFont = game.Content.Load<SpriteFont>("fonts/HighlightFont");
-
-            Menu = new MenuComponent(game, regularFont, highlightFont, menuItems);
+            Menu = new MenuComponent(game, Shared.regularFonts, Shared.highlightFonts, menuItems);
 
             this.Components.Add(Menu);
         }

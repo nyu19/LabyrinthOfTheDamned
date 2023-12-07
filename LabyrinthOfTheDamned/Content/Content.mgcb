@@ -147,6 +147,18 @@
 /processorParam:TextureFormat=Color
 /build:images/hero/WALK.png
 
+#begin images/other/heart.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/other/heart.png
+
 #begin images/Scenes/Controls.jpg
 /importer:TextureImporter
 /processor:TextureProcessor

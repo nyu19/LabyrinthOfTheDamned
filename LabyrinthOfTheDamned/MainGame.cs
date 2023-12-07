@@ -35,6 +35,8 @@ namespace LabyrinthOfTheDamned
         {
             Shared.stageSize = new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
 
+            Shared.regularFonts = Content.Load<SpriteFont>("fonts/RegularFont");
+            Shared.highlightFonts = Content.Load<SpriteFont>("fonts/HighlightFont");
             // TODO: Add your initialization logic here
 
             base.Initialize();
