@@ -16,14 +16,34 @@ namespace LabyrinthOfTheDamned.Scenes.StartScene
         public MenuComponent Menu { get; set; }
         private SpriteBatch sb;
         string[] menuItems = { "Start Game", "Help", "High Score", "Credit", "Quit" };
+
+        Texture2D texture;
+
         public TimeSpan MusicSpan { get; set; } = TimeSpan.Zero;
+
         public StartScene(Game game) : base(game)
         {
             this.game = (MainGame)game;
-
+            sb = Shared._sb;
             Menu = new MenuComponent(game, Shared.regularFonts, Shared.highlightFonts, menuItems);
 
             this.Components.Add(Menu);
+            LoadContent();
+        }
+
+        protected override void LoadContent()
+        {
+            texture = Game.Content.Load<Texture2D>("images/Scenes/Main");
+            base.LoadContent();
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            sb.Begin();
+            sb.Draw(texture, new Rectangle(0, 0, (int)Shared.stageSize.X, (int)Shared.stageSize.Y), Color.White);
+            sb.End();
+
+            base.Draw(gameTime);
         }
         public override void Show()
         {

@@ -171,18 +171,6 @@
 /processorParam:TextureFormat=Color
 /build:images/Scenes/Controls.jpg
 
-#begin images/Scenes/Credits.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:images/Scenes/Credits.jpg
-
 #begin images/Scenes/HighScore.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -194,6 +182,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:images/Scenes/HighScore.jpg
+
+#begin images/Scenes/Main.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/Scenes/Main.jpg
+
+#begin images/Scenes/Untitled.jpeg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/Scenes/Untitled.jpeg;images/Scenes/Credits.jpeg
 
 #begin sounds/actionscene.mp3
 /importer:Mp3Importer
