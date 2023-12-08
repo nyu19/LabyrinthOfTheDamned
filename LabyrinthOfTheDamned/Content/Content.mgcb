@@ -207,6 +207,30 @@
 /processorParam:TextureFormat=Color
 /build:images/Scenes/Main.jpg
 
+#begin images/Scenes/playerone.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/Scenes/playerone.jpg
+
+#begin images/Scenes/playertwo.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/Scenes/playertwo.jpg
+
 #begin images/Scenes/Untitled.jpeg
 /importer:TextureImporter
 /processor:TextureProcessor
