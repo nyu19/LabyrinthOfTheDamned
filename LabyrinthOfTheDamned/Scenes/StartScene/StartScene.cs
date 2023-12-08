@@ -15,7 +15,7 @@ namespace LabyrinthOfTheDamned.Scenes.StartScene
         MainGame game;
         public MenuComponent Menu { get; set; }
         private SpriteBatch sb;
-        string[] menuItems = { "Start Game", "Help", "High Score", "Credit", "Quit" };
+        string[] menuItems = { "Start Game", "Help", "High Score", "Credits", "Quit" };
 
         Texture2D texture;
 

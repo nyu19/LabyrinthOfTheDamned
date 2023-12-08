@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,13 +22,14 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
         public static bool gameEnded;
         private static List<GameComponent> components;
         public static new List<GameComponent> Components { get => components; set => components = value; }
+        Texture2D texture;
 
         public ActionScene(Game game) : base(game)
         {
             this.game = (MainGame)game;
             sb = Shared._sb;
             components = new List<GameComponent>();
-
+            LoadContent();
             KeyModel playerOneKeys = new KeyModel()
             {
                 Attack = Keys.F,
@@ -79,8 +81,17 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
 
         }
 
+        protected override void LoadContent()
+        {
+            texture = Game.Content.Load<Texture2D>("images/Scenes/Battle");
+            base.LoadContent();
+        }
+
         public override void Draw(GameTime gameTime)
         {
+            sb.Begin();
+            sb.Draw(texture, new Rectangle(0, 0, (int)Shared.stageSize.X, (int)Shared.stageSize.Y), Color.White);
+            sb.End();
             foreach (GameComponent item in components)
             {
                 if (item is DrawableGameComponent)
