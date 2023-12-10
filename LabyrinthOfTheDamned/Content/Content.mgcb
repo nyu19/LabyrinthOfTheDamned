@@ -183,7 +183,7 @@
 /processorParam:TextureFormat=Color
 /build:images/scenes/Controls.jpg
 
-#begin images/scenes/Credits.jpeg
+#begin images/scenes/Credits.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -193,7 +193,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/scenes/Credits.jpeg
+/build:images/scenes/Credits.jpg
 
 #begin images/scenes/HighScore.jpg
 /importer:TextureImporter

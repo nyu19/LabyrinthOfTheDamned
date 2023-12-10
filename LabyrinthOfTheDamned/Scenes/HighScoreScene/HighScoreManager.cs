@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Names:
+ *  - Nakul Upasani
+ *  - Shahyar Fida
+ * Revision History:
+ *  - Created By Nakul Upasani; Created: 1-Dec-2023
+ * 
+ */
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,19 +16,19 @@ using System.Threading.Tasks;
 
 namespace LabyrinthOfTheDamned.Scenes.HighScoreScene
 {
+    /// <summary>
+    /// High Score Manager Class
+    /// </summary>
     public class HighScoreManager
     {
         private static string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)+ @"\LabryinthOfTheDamned\Highscore\";
         private static string fileName = @"hs.bin";
         private static string filePath = dirPath + fileName;
-        
         public static Dictionary<int,int> ScoreSet { get; set; } = new Dictionary<int,int>(2);
 
-        public HighScoreManager()
-        {
-            DeserializeHighscore();
-        }
-
+        /// <summary>
+        /// Deserialize Highscore
+        /// </summary>
         public static void DeserializeHighscore()
         {
             try
@@ -45,10 +53,18 @@ namespace LabyrinthOfTheDamned.Scenes.HighScoreScene
             }
         }
 
+        /// <summary>
+        /// Increments the Score for player id
+        /// </summary>
+        /// <param name="player">id of the player to add score to</param>
         public static void AddScore(int player)
         {
             ScoreSet[player]++;
         }
+        
+        /// <summary>
+        /// Serializes Highscore
+        /// </summary>
         public static void SerializeHighscore()
         {
             try

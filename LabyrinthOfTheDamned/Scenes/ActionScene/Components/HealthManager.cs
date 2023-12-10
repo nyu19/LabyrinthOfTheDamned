@@ -1,4 +1,12 @@
-﻿using LabyrinthOfTheDamned.Utility;
+﻿/*
+ * Names:
+ *  - Nakul Upasani
+ *  - Shahyar Fida
+ * Revision History:
+ *  - Created By Nakul Upasani; Created: 1-Dec-2023
+ * 
+ */
+using LabyrinthOfTheDamned.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,11 +17,18 @@ using System.Threading.Tasks;
 
 namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 {
+    /// <summary>
+    /// Enum for HealthManager starting position
+    /// </summary>
     public enum Position
     {
         Left,
         Right
     }
+
+    /// <summary>
+    /// Health Manager Class
+    /// </summary>
     public class HealthManager : DrawableGameComponent
     {
         Player linkedPlayer;
@@ -26,6 +41,14 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         Rectangle frame;
         Color overlay;
         bool isFlashing;
+
+        /// <summary>
+        /// Constructor for HealthManager
+        /// </summary>
+        /// <param name="game">game instance</param>
+        /// <param name="linkedPlayer">player to which the health manager is connnected</param>
+        /// <param name="position">postion of the health counter</param>
+        /// <param name="ps">postion of the health counter either left or right of the screen</param>
         public HealthManager(Game game, Player linkedPlayer, Vector2 position, Position ps) : base(game)
         {
             this.linkedPlayer = linkedPlayer;
@@ -50,6 +73,11 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 
         }
 
+
+        /// <summary>
+        /// Overridden Method for Update
+        /// </summary>
+        /// <param name="gameTime">instance of gametime from game</param>
         public override void Update(GameTime gameTime)
         {
             int hp = linkedPlayer.PlayerHealth;
@@ -93,6 +121,10 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Overriden Method
+        /// </summary>
+        /// <param name="gameTime">gametime Instance of the Game</param>
         public override void Draw(GameTime gameTime)
         {
             sb.Begin();

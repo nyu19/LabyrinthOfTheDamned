@@ -1,4 +1,12 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿/*
+ * Names:
+ *  - Nakul Upasani
+ *  - Shahyar Fida
+ * Revision History:
+ *  - Created By Nakul Upasani; Created: 1-Dec-2023
+ * 
+ */
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using System;
@@ -13,6 +21,9 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 {
+    /// <summary>
+    /// Enum for Various States
+    /// </summary>
     public enum State
     {
         Jumping,
@@ -23,6 +34,9 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         Hurt
     }
 
+    /// <summary>
+    /// Player Class
+    /// </summary>
     public partial class Player : DrawableGameComponent
     {
         public int id;
@@ -51,7 +65,6 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         SoundEffect sword, jump, damageTaken;
         int playerHealth;
         Random speedRandomize = new Random();
-
         public bool isDead { get { return PlayerHealth <= 0; } }
         public Rectangle Hitbox
         {
@@ -59,10 +72,18 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                 return new Rectangle(DestRectangle.Left + LEFT_MARGIN, DestRectangle.Top + TOP_MARGIN, 93, 108);
             }
         }
-
         public Rectangle DestRectangle { get => destRectangle; set => destRectangle = value; }
         public int PlayerHealth { get => playerHealth; set => playerHealth = value; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="id">id of the player</param>
+        /// <param name="game">game instance</param>
+        /// <param name="sb">Sprite Batch</param>
+        /// <param name="startingPosition">Starting position of players</param>
+        /// <param name="playerTextures">textures of players</param>
+        /// <param name="playerKeys">keys of player controls</param>
         public Player(int id,Game game, SpriteBatch sb, Vector2 startingPosition, TextureModel playerTextures, KeyModel playerKeys) : base(game)
         {
             this.id = id;
@@ -79,6 +100,11 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
             stageRect = new Rectangle(0, 0, (int)Shared.stageSize.X, (int)Shared.stageSize.Y);
         }
 
+
+        /// <summary>
+        /// Overridden Method for Update
+        /// </summary>
+        /// <param name="gameTime">instance of gametime from game</param>
         public override void Update(GameTime gameTime)
         {
 
@@ -189,12 +215,16 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Overriden Method
+        /// </summary>
+        /// <param name="gameTime">gametime Instance of the Game</param>
         public override void Draw(GameTime gameTime)
         {
-
             sb.Begin();
             if (Enabled)
                 sb.Draw(activeTex, DestRectangle, frame, Color.White, 0f, origin, flip, 0);
+                
             sb.End();
 
             base.Draw(gameTime);

@@ -1,4 +1,12 @@
-﻿using LabyrinthOfTheDamned.Utility;
+﻿/*
+ * Names:
+ *  - Nakul Upasani
+ *  - Shahyar Fida
+ * Revision History:
+ *  - Created By Nakul Upasani; Created: 1-Dec-2023
+ * 
+ */
+using LabyrinthOfTheDamned.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -10,11 +18,17 @@ using System.Threading.Tasks;
 
 namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 {
+    /// <summary>
+    /// Parital Player class
+    /// </summary>
     public partial class Player
     {
+        /// <summary>
+        /// Health Manager
+        /// </summary>
         private void ManageHealth()
         {
-            // Add health deduction multipler
+
             foreach (GameComponent item in ActionScene.Components)
             {
                 if (item == this || item is not Player)
@@ -27,7 +41,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                 
                 if (p1.Intersects(p2) && this.IsFacing(otherPlayer) && this.frameCounter == 6 && this.mCurrentState == State.Attacking)
                 {
-                    otherPlayer.PlayerHealth -= 5 * 20; // TO REMOVE
+                    otherPlayer.PlayerHealth -= 5;
                     mCurrentState = State.Hurt;
                 }
 
@@ -40,38 +54,42 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                     mCurrentState = State.Hurt;
                 }
             }
-
         }
 
+        /// <summary>
+        /// Handles Movement on the X Axis
+        /// </summary>
+        /// <param name="ks">Keyboard state of current update</param>
         private void XMovementHandler(KeyboardState ks)
         {
-
-            if (ks.IsKeyDown(playerKeys.Left) && mCurrentState != State.Attacking && Hitbox.Left > 0)
+            if (ks.IsKeyDown(playerKeys.Left) && mCurrentState != State.Attacking && Hitbox.Left-(FRAME_WIDTH / 2) >= 0 )
             {
                 mCurrentState = State.Walking;
                 flip = SpriteEffects.FlipHorizontally;
                 velocity.X = -(SPEED_FACTOR + speedRandomize.Next(-2,2));
             }
-            else if (ks.IsKeyDown(playerKeys.Right) && mCurrentState != State.Attacking && Hitbox.Right < Shared.stageSize.X)
+            else if (ks.IsKeyDown(playerKeys.Right) && mCurrentState != State.Attacking && Hitbox.Right-(FRAME_WIDTH/2) <= Shared.stageSize.X)
             {
                 mCurrentState = State.Walking;
                 flip = SpriteEffects.None;
                 velocity.X = SPEED_FACTOR + speedRandomize.Next(-2, 2);
             }
-            else if (mCurrentState != State.Jumping || mCurrentState != State.Attacking )
+            else if (mCurrentState != State.Jumping || mCurrentState != State.Attacking)
             {
                 velocity.X = 0;
             }
-
-
         }
 
+        /// <summary>
+        /// Handles Jumping of the Player
+        /// </summary>
+        /// <param name="ks"></param>
         private void JumpHandler(KeyboardState ks)
         {
             if (hasJumped)
             {
-                float i = 3;
-                velocity.Y += 0.15f * i;
+                const float GRAVITY_FACTOR = 3;
+                velocity.Y += 0.15f * GRAVITY_FACTOR;
             }
 
             if (DestRectangle.Y >= GROUND_Y) // TODO: Replace with hitbox
@@ -93,7 +111,6 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 
         }
 
-
         #region Collision
 
         const int LEFT_MARGIN = 110;
@@ -101,48 +118,52 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         const int TOP_MARGIN = 88;
         const int BOTTOM_MARGIN = 288 - 195;
 
-        protected bool IsTouchingLeft(Player dgc)
+        /// <summary>
+        /// Checks if player's left is touching other player's left
+        /// </summary>
+        /// <param name="otherPlayer">other player</param>
+        /// <returns>Returns true if player is touching other player</returns>
+        protected bool IsTouchingLeft(Player otherPlayer)
         {
-            return destRectangle.Right - RIGHT_MARGIN > dgc.DestRectangle.Left + LEFT_MARGIN &&
-              destRectangle.Left + LEFT_MARGIN < dgc.DestRectangle.Left + LEFT_MARGIN &&
-              destRectangle.Bottom - BOTTOM_MARGIN > dgc.DestRectangle.Top + TOP_MARGIN &&
-              destRectangle.Top + TOP_MARGIN < dgc.DestRectangle.Bottom - BOTTOM_MARGIN;
+            return destRectangle.Right - RIGHT_MARGIN > otherPlayer.DestRectangle.Left + LEFT_MARGIN &&
+              destRectangle.Left + LEFT_MARGIN < otherPlayer.DestRectangle.Left + LEFT_MARGIN &&
+              destRectangle.Bottom - BOTTOM_MARGIN > otherPlayer.DestRectangle.Top + TOP_MARGIN &&
+              destRectangle.Top + TOP_MARGIN < otherPlayer.DestRectangle.Bottom - BOTTOM_MARGIN;
+        }
+        
+        /// <summary>
+        /// Checks if player's right is touching other player's left
+        /// </summary>
+        /// <param name="otherPlayer">other player</param>
+        /// <returns>Returns true if player is touching other player</returns>
+        protected bool IsTouchingRight(Player otherPlayer)
+        {
+            return destRectangle.Left + LEFT_MARGIN < otherPlayer.DestRectangle.Right - RIGHT_MARGIN &&
+              destRectangle.Right - RIGHT_MARGIN > otherPlayer.DestRectangle.Right - RIGHT_MARGIN &&
+              destRectangle.Bottom - BOTTOM_MARGIN > otherPlayer.DestRectangle.Top + TOP_MARGIN &&
+              destRectangle.Top + TOP_MARGIN < otherPlayer.DestRectangle.Bottom - BOTTOM_MARGIN;
         }
 
-        protected bool IsTouchingRight(Player dgc)
+        /// <summary>
+        /// Checks if player is facing enemy
+        /// </summary>
+        /// <param name="otherPlayer">other player</param>
+        /// <returns>Returns true if player is facing the other player
+        protected bool IsFacing(Player otherPlayer)
         {
-            return destRectangle.Left + LEFT_MARGIN < dgc.DestRectangle.Right - RIGHT_MARGIN &&
-              destRectangle.Right - RIGHT_MARGIN > dgc.DestRectangle.Right - RIGHT_MARGIN &&
-              destRectangle.Bottom - BOTTOM_MARGIN > dgc.DestRectangle.Top + TOP_MARGIN &&
-              destRectangle.Top + TOP_MARGIN < dgc.DestRectangle.Bottom - BOTTOM_MARGIN;
+            return (this.Hitbox.Left < otherPlayer.Hitbox.Left && this.flip == SpriteEffects.None) ||
+                (this.Hitbox.Left > otherPlayer.Hitbox.Left && this.flip == SpriteEffects.FlipHorizontally);
         }
 
-        protected bool IsTouchingTop(Player dgc)
+        /// <summary>
+        /// Checks if player is on attack Level of other player
+        /// </summary>
+        /// <param name="otherPlayer">other player</param>
+        /// <returns>Returns true if player levelled to hit other player</returns>
+        protected bool IsLeveled(Player otherPlayer)
         {
-            return destRectangle.Bottom - BOTTOM_MARGIN > dgc.DestRectangle.Top + TOP_MARGIN &&
-              destRectangle.Top + TOP_MARGIN < dgc.DestRectangle.Top + TOP_MARGIN &&
-              destRectangle.Right - RIGHT_MARGIN > dgc.DestRectangle.Left + LEFT_MARGIN &&
-              destRectangle.Left + LEFT_MARGIN < dgc.DestRectangle.Right - RIGHT_MARGIN;
-        }
-
-        protected bool IsTouchingBottom(Player dgc)
-        {
-            return destRectangle.Top + TOP_MARGIN < dgc.DestRectangle.Bottom - BOTTOM_MARGIN &&
-              destRectangle.Bottom - BOTTOM_MARGIN > dgc.DestRectangle.Bottom - BOTTOM_MARGIN &&
-              destRectangle.Right - RIGHT_MARGIN > dgc.DestRectangle.Left + LEFT_MARGIN &&
-              destRectangle.Left + LEFT_MARGIN < dgc.DestRectangle.Right - RIGHT_MARGIN;
-        }
-
-        protected bool IsFacing(Player dgc)
-        {
-            return (this.Hitbox.Left < dgc.Hitbox.Left && this.flip == SpriteEffects.None) ||
-                (this.Hitbox.Left > dgc.Hitbox.Left && this.flip == SpriteEffects.FlipHorizontally);
-        }
-
-        protected bool IsLeveled(Player dgc)
-        {
-            return ((this.Hitbox.Top + this.Hitbox.Bottom)/2 >= dgc.Hitbox.Top ) ||
-                ((this.Hitbox.Top + this.Hitbox.Bottom) / 2 <= dgc.Hitbox.Bottom);
+            return ((this.Hitbox.Top + this.Hitbox.Bottom)/2 >= otherPlayer.Hitbox.Top ) ||
+                ((this.Hitbox.Top + this.Hitbox.Bottom) / 2 <= otherPlayer.Hitbox.Bottom);
         }
         #endregion
 

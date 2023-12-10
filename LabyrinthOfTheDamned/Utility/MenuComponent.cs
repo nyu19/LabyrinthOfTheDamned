@@ -1,4 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿/*
+ * Names:
+ *  - Nakul Upasani
+ *  - Shahyar Fida
+ * Revision History:
+ *  - Created By Nakul Upasani; Created: 1-Dec-2023
+ */
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -7,6 +14,9 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace LabyrinthOfTheDamned.Utility
 {
+    /// <summary>
+    /// Menu Component
+    /// </summary>
     public class MenuComponent : DrawableGameComponent
     {
         private SpriteBatch sb;
@@ -20,16 +30,27 @@ namespace LabyrinthOfTheDamned.Utility
         private KeyboardState oldState;
         private SoundEffect menuClick;
         private const float VOLUME = 0.05f;
-        public MenuComponent(Game game, SpriteFont regularFont, SpriteFont highlightFont, string[] menus, Vector2 pos) : base(game)
+
+        /// <summary>
+        /// Constructor for Menu Components
+        /// </summary>
+        /// <param name="game">Maingame instance</param>
+        /// <param name="menus">string array for menu items</param>
+        /// <param name="pos">postion of the menu</param>
+        public MenuComponent(Game game, string[] menus, Vector2 pos) : base(game)
         {
             sb = Shared._sb;
-            this.regularFont = regularFont;
-            this.highlightFont = highlightFont;
+            this.regularFont = Shared.regularFonts;
+            this.highlightFont = Shared.highlightFonts;
             menuItems = menus.ToList();
             position = pos;
             menuClick = game.Content.Load<SoundEffect>("sounds/interface");
         }
 
+        /// <summary>
+        /// Overriden Method
+        /// </summary>
+        /// <param name="gameTime">gametime Instance of the Game</param>
         public override void Draw(GameTime gameTime)
         {
             Vector2 tempPos = position;
@@ -56,6 +77,10 @@ namespace LabyrinthOfTheDamned.Utility
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Overridden Method for Update
+        /// </summary>
+        /// <param name="gameTime">instance of gametime from game</param>
         public override void Update(GameTime gameTime)
         {
             KeyboardState ks = Keyboard.GetState();

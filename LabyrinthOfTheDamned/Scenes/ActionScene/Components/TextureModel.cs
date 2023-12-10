@@ -1,4 +1,12 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿/*
+ * Names:
+ *  - Nakul Upasani
+ *  - Shahyar Fida
+ * Revision History:
+ *  - Created By Nakul Upasani; Created: 1-Dec-2023
+ * 
+ */
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 {
+    /// <summary>
+    /// Texture Modes
+    /// </summary>
     public class TextureModel
     {
         public Texture2D Walk { get; init; }

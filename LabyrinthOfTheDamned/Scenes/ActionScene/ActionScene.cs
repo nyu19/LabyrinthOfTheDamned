@@ -1,4 +1,12 @@
-﻿using LabyrinthOfTheDamned.Scenes.ActionScene.Components;
+﻿/*
+ * Names:
+ *  - Nakul Upasani
+ *  - Shahyar Fida
+ * Revision History:
+ *  - Created By Nakul Upasani; Created: 1-Dec-2023
+ * 
+ */
+using LabyrinthOfTheDamned.Scenes.ActionScene.Components;
 using LabyrinthOfTheDamned.Scenes.ActionScene.EndgameScene;
 using LabyrinthOfTheDamned.Scenes.HighScoreScene;
 using LabyrinthOfTheDamned.Utility;
@@ -6,8 +14,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using SharpDX.Direct3D9;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,6 +23,9 @@ using System.Threading.Tasks;
 
 namespace LabyrinthOfTheDamned.Scenes.ActionScene
 {
+    /// <summary>
+    /// Action Scene
+    /// </summary>
     public class ActionScene : GameScene
     {
         MainGame game;
@@ -28,6 +37,10 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
         Player p1, p2;
         EndGameScene endGame;
 
+        /// <summary>
+        /// Constuctor for Game Scene
+        /// </summary>
+        /// <param name="game">Instance of Game</param>
         public ActionScene(Game game) : base(game)
         {
             this.game = (MainGame)game;
@@ -41,7 +54,6 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
                 Left = Keys.A,
                 Right = Keys.D
             };
-
             TextureModel playerOneTexures = new TextureModel()
             {
                 Attack = game.Content.Load<Texture2D>("images/hero/ATTACK"),
@@ -50,7 +62,6 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
                 Idle = game.Content.Load<Texture2D>("images/hero/IDLE"),
                 Death = game.Content.Load<Texture2D>("images/hero/DEATH")
             };
-
 
             p1 = new Player(1,game, sb, new Vector2(Shared.stageSize.X / 4, Shared.stageSize.Y), playerOneTexures, playerOneKeys);
 
@@ -61,7 +72,6 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
                 Left = Keys.Left,
                 Right = Keys.Right
             };
-
             TextureModel playerTwoTexures = new TextureModel()
             {
                 Attack = game.Content.Load<Texture2D>("images/alter/ATTACK"),
@@ -77,7 +87,6 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
             HealthManager h1 = new HealthManager(game, p1, new Vector2(10, 10), Position.Left);
             HealthManager h2 = new HealthManager(game, p2, new Vector2(10, 10), Position.Right);
 
-
             Components.Add(p2);
             Components.Add(h2);
             Components.Add(p1);
@@ -85,6 +94,9 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
 
         }
 
+        /// <summary>
+        /// Loads Content
+        /// </summary>
         protected override void LoadContent()
         {
             texture = game.Content.Load<Texture2D>("images/scenes/Battle");
@@ -93,6 +105,10 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
             base.LoadContent();
         }
 
+        /// <summary>
+        /// Overriden Method
+        /// </summary>
+        /// <param name="gameTime">gametime Instance of the Game</param>
         public override void Draw(GameTime gameTime)
         {
             sb.Begin();
@@ -112,6 +128,11 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
             base.Draw(gameTime);
         }
 
+
+        /// <summary>
+        /// Overridden Method for Update
+        /// </summary>
+        /// <param name="gameTime">instance of gametime from game</param>
         public override void Update(GameTime gameTime)
         {
             foreach (GameComponent item in components)
@@ -137,12 +158,14 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
                         game.Components.Add(endGame);
                         endGame.Show();
                         this.Hide();
-
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Shows the component and changes the background music
+        /// </summary>
         public override void Show()
         {
             MediaPlayer.Stop();

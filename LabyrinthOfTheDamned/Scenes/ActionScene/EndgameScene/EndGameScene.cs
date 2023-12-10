@@ -1,4 +1,12 @@
-﻿using LabyrinthOfTheDamned.Scenes.CreditScene;
+﻿/*
+ * Names:
+ *  - Nakul Upasani
+ *  - Shahyar Fida
+ * Revision History:
+ *  - Created By Nakul Upasani; Created: 1-Dec-2023
+ * 
+ */
+using LabyrinthOfTheDamned.Scenes.CreditScene;
 using LabyrinthOfTheDamned.Scenes.HelpScene;
 using LabyrinthOfTheDamned.Scenes.HighScoreScene;
 using LabyrinthOfTheDamned.Scenes.StartScene;
@@ -14,6 +22,9 @@ using System.Threading.Tasks;
 
 namespace LabyrinthOfTheDamned.Scenes.ActionScene.EndgameScene
 {
+    /// <summary>
+    /// End Game Scene
+    /// </summary>
     public class EndGameScene : GameScene
     {
         MainGame game;
@@ -22,16 +33,25 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.EndgameScene
         MenuComponent selection;
         string[] menuItems = { "Back to Menu", "Exit" };
 
+        /// <summary>
+        /// Constructor for End game Scene
+        /// </summary>
+        /// <param name="game">game instance</param>
+        /// <param name="texture">texture for the end game background</param>
         public EndGameScene(Game game, Texture2D texture) : base(game)
         {
             this.game = (MainGame)game;
             this.texture = texture;
             sb = Shared._sb;
-            selection = new MenuComponent(game, Shared.regularFonts, Shared.highlightFonts, menuItems,new Vector2((Shared.stageSize.X/2) - Shared.highlightFonts.MeasureString(menuItems[0]).X/2, 500));
+            selection = new MenuComponent(game, menuItems,new Vector2((Shared.stageSize.X/2) - Shared.highlightFonts.MeasureString(menuItems[0]).X/2, 500));
 
             this.Components.Add(selection);
         }
 
+        /// <summary>
+        /// Overriden Method
+        /// </summary>
+        /// <param name="gameTime">gametime Instance of the Game</param>
         public override void Draw(GameTime gameTime)
         {
             sb.Begin();
@@ -41,6 +61,10 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.EndgameScene
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Overridden Method for Update
+        /// </summary>
+        /// <param name="gameTime">instance of gametime from game</param>
         public override void Update(GameTime gameTime)
         {
             int selectedIndex = 0;
@@ -59,10 +83,12 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.EndgameScene
                 game.ExitGame();
             }
             
-
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Hides all scenes
+        /// </summary>
         private void hideAllScenes()
         {
             foreach (GameComponent item in Components)
