@@ -29,7 +29,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         const int FRAME_WIDTH = 288;
         const int SPEED_FACTOR = 7;
         const int JUMP_FACTOR = -15;
-        const int GROUND_Y = 1000;
+        const int GROUND_Y = 800;
         const int STARTING_HEALTH = 100;
         int scaleFactor = 1;
         SpriteBatch sb;
@@ -41,7 +41,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         Texture2D activeTex;
         int frameCounter = 0;
         Rectangle frame = new Rectangle(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-        Rectangle destRectangle;
+        Rectangle destRectangle, stageRect;
         MainGame game;
         KeyboardState oldKeyboardState;
         public SpriteEffects flip = SpriteEffects.None;
@@ -49,6 +49,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         Vector2 velocity;
         SoundEffect sword, jump, damageTaken;
         int playerHealth;
+        Random speedRandomize = new Random();
 
         public bool isDead { get { return PlayerHealth <= 0; } }
         public Rectangle Hitbox
@@ -73,6 +74,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
             this.origin = new Vector2(FRAME_WIDTH / 2, FRAME_HEIGHT);
             this.sword = game.Content.Load<SoundEffect>("sounds/sword");
             PlayerHealth = STARTING_HEALTH;
+            stageRect = new Rectangle(0, 0, (int)Shared.stageSize.X, (int)Shared.stageSize.Y);
         }
 
         public override void Update(GameTime gameTime)

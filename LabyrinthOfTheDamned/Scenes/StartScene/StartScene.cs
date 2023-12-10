@@ -25,7 +25,7 @@ namespace LabyrinthOfTheDamned.Scenes.StartScene
         {
             this.game = (MainGame)game;
             sb = Shared._sb;
-            Menu = new MenuComponent(game, Shared.regularFonts, Shared.highlightFonts, menuItems);
+            Menu = new MenuComponent(game, Shared.regularFonts, Shared.highlightFonts, menuItems, new Vector2(375, 150));
 
             this.Components.Add(Menu);
             LoadContent();
@@ -33,7 +33,7 @@ namespace LabyrinthOfTheDamned.Scenes.StartScene
 
         protected override void LoadContent()
         {
-            texture = Game.Content.Load<Texture2D>("images/Scenes/Main");
+            texture = Game.Content.Load<Texture2D>("images/scenes/Main");
             base.LoadContent();
         }
 

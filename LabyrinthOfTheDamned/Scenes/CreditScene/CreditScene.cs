@@ -22,7 +22,7 @@ namespace LabyrinthOfTheDamned.Scenes.CreditScene
         }
         protected override void LoadContent()
         {
-            texture = Game.Content.Load<Texture2D>("images/Scenes/Credits");
+            texture = Game.Content.Load<Texture2D>("images/scenes/Credits");
             base.LoadContent();
         }
 

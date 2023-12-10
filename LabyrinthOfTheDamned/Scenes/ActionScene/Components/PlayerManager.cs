@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LabyrinthOfTheDamned.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -26,12 +27,12 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                 
                 if (p1.Intersects(p2) && this.IsFacing(otherPlayer) && this.frameCounter == 6 && this.mCurrentState == State.Attacking)
                 {
-                    otherPlayer.PlayerHealth -= 3;
+                    otherPlayer.PlayerHealth -= 5 * 20; // TO REMOVE
                     mCurrentState = State.Hurt;
                 }
 
-                p1.Inflate(10, 10); 
-                p2.Inflate(10, 10); 
+                p1.Inflate(20, 0); 
+                p2.Inflate(20, 0); 
 
                 if (p1.Intersects(p2) && this.IsFacing(otherPlayer) && this.frameCounter == 6 && this.mCurrentState == State.Attacking)
                 {
@@ -46,22 +47,23 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         private void XMovementHandler(KeyboardState ks)
         {
 
-            if (ks.IsKeyDown(playerKeys.Left) && mCurrentState != State.Attacking)
+            if (ks.IsKeyDown(playerKeys.Left) && mCurrentState != State.Attacking && Hitbox.Left > 0)
             {
                 mCurrentState = State.Walking;
                 flip = SpriteEffects.FlipHorizontally;
-                velocity.X = -SPEED_FACTOR;
+                velocity.X = -(SPEED_FACTOR + speedRandomize.Next(-2,2));
             }
-            else if (ks.IsKeyDown(playerKeys.Right) && mCurrentState != State.Attacking)
+            else if (ks.IsKeyDown(playerKeys.Right) && mCurrentState != State.Attacking && Hitbox.Right < Shared.stageSize.X)
             {
                 mCurrentState = State.Walking;
                 flip = SpriteEffects.None;
-                velocity.X = SPEED_FACTOR;
+                velocity.X = SPEED_FACTOR + speedRandomize.Next(-2, 2);
             }
-            else if (mCurrentState != State.Jumping || mCurrentState != State.Attacking)
+            else if (mCurrentState != State.Jumping || mCurrentState != State.Attacking )
             {
                 velocity.X = 0;
             }
+
 
         }
 

@@ -159,7 +159,7 @@
 /processorParam:TextureFormat=Color
 /build:images/other/heart.png
 
-#begin images/Scenes/Battle.jpg
+#begin images/scenes/Battle.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -169,9 +169,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/Scenes/Battle.jpg
+/build:images/scenes/Battle.png
 
-#begin images/Scenes/Controls.jpg
+#begin images/scenes/Controls.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -181,9 +181,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/Scenes/Controls.jpg
+/build:images/scenes/Controls.jpg
 
-#begin images/Scenes/HighScore.jpg
+#begin images/scenes/Credits.jpeg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -193,9 +193,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/Scenes/HighScore.jpg
+/build:images/scenes/Credits.jpeg
 
-#begin images/Scenes/Main.jpg
+#begin images/scenes/HighScore.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -205,9 +205,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/Scenes/Main.jpg
+/build:images/scenes/HighScore.jpg
 
-#begin images/Scenes/playerone.jpg
+#begin images/scenes/Main.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -217,9 +217,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/Scenes/playerone.jpg
+/build:images/scenes/Main.jpg
 
-#begin images/Scenes/playertwo.jpg
+#begin images/scenes/playerone.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -229,9 +229,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/Scenes/playertwo.jpg
+/build:images/scenes/playerone.jpg
 
-#begin images/Scenes/Untitled.jpeg
+#begin images/scenes/playertwo.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -241,7 +241,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/Scenes/Untitled.jpeg;images/Scenes/Credits.jpeg
+/build:images/scenes/playertwo.jpg
 
 #begin sounds/actionscene.mp3
 /importer:Mp3Importer

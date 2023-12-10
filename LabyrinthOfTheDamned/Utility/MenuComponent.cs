@@ -1,12 +1,11 @@
-﻿using LabyrinthOfTheDamned.Utility;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework.Audio;
 
-namespace LabyrinthOfTheDamned.Scenes.StartScene
+namespace LabyrinthOfTheDamned.Utility
 {
     public class MenuComponent : DrawableGameComponent
     {
@@ -16,18 +15,18 @@ namespace LabyrinthOfTheDamned.Scenes.StartScene
         private List<string> menuItems;
         public int SelectedIndex { get; set; }
         private Vector2 position;
-        private Color regularColor = Color.Black;
-        private Color highlightColor = Color.Red;
+        private Color regularColor = Color.White;
+        private Color highlightColor = Color.DarkTurquoise;
         private KeyboardState oldState;
         private SoundEffect menuClick;
         private const float VOLUME = 0.05f;
-        public MenuComponent(Game game, SpriteFont regularFont, SpriteFont highlightFont, string[] menus) : base(game)
+        public MenuComponent(Game game, SpriteFont regularFont, SpriteFont highlightFont, string[] menus, Vector2 pos) : base(game)
         {
             sb = Shared._sb;
             this.regularFont = regularFont;
             this.highlightFont = highlightFont;
             menuItems = menus.ToList();
-            position = new Vector2(Shared.stageSize.X / 2, Shared.stageSize.Y / 2);
+            position = pos;
             menuClick = game.Content.Load<SoundEffect>("sounds/interface");
         }
 
@@ -64,7 +63,7 @@ namespace LabyrinthOfTheDamned.Scenes.StartScene
             if (oldState.IsKeyUp(Keys.Down) && ks.IsKeyDown(Keys.Down))
             {
                 SelectedIndex++;
-                menuClick.Play(VOLUME,0,0);
+                menuClick.Play(VOLUME, 0, 0);
                 if (SelectedIndex == menuItems.Count)
                 {
                     SelectedIndex = 0;

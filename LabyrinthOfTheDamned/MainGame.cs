@@ -21,14 +21,17 @@ namespace LabyrinthOfTheDamned
         public HighScoreScene highscoreScene;
         public HelpScene helpScene;
         public CreditScene creditScene;
+        public static KeyboardState oldKeyboardState;
+
         public MainGame()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.Title = "Labyrinth Of The Damned | Nakul Upasani and Shahyar Fida";
-            _graphics.PreferredBackBufferHeight = 1000;
+            _graphics.PreferredBackBufferHeight = 800;
             _graphics.PreferredBackBufferWidth = (int)(_graphics.PreferredBackBufferHeight * 1.78);
+
         }
 
         protected override void Initialize()
@@ -38,7 +41,7 @@ namespace LabyrinthOfTheDamned
             Shared.regularFonts = Content.Load<SpriteFont>("fonts/RegularFont");
             Shared.highlightFonts = Content.Load<SpriteFont>("fonts/HighlightFont");
             // TODO: Add your initialization logic here
-
+            HighScoreManager.DeserializeHighscore();
             base.Initialize();
         }
 
@@ -64,20 +67,28 @@ namespace LabyrinthOfTheDamned
             creditScene = new CreditScene(this);
             this.Components.Add(creditScene);
 
-
         }
 
         protected override void Update(GameTime gameTime)
         {
             int selectedIndex = 0;
             KeyboardState ks = Keyboard.GetState();
+            if (ks.IsKeyUp(Keys.Enter))
+                oldKeyboardState = ks;
 
             if (startScene.Enabled)
             {
                 selectedIndex = startScene.Menu.SelectedIndex;
-                if (selectedIndex == 0 && ks.IsKeyDown(Keys.Enter))
+                if (selectedIndex == 0 && ks.IsKeyDown(Keys.Enter) && oldKeyboardState.IsKeyUp(Keys.Enter))
                 {
                     hideAllScenes();
+                    if (ActionScene.gameEnded)
+                    {
+                        this.Components.Remove(actionScene);
+                        actionScene = new ActionScene(this);
+                        this.Components.Add(actionScene);
+                        ActionScene.gameEnded = false;
+                    }
                     actionScene.Show();
 
                 }
@@ -140,6 +151,12 @@ namespace LabyrinthOfTheDamned
                     gs.Hide();
                 }
             }
+        }
+
+        public new void Exit()
+        {
+            HighScoreManager.SerializeHighscore();
+            base.Exit();
         }
     }
 }

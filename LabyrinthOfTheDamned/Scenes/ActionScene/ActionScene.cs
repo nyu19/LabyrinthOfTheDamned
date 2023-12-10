@@ -1,4 +1,6 @@
 ﻿using LabyrinthOfTheDamned.Scenes.ActionScene.Components;
+using LabyrinthOfTheDamned.Scenes.ActionScene.EndgameScene;
+using LabyrinthOfTheDamned.Scenes.HighScoreScene;
 using LabyrinthOfTheDamned.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,7 +24,9 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
         public static bool gameEnded;
         private static List<GameComponent> components;
         public static new List<GameComponent> Components { get => components; set => components = value; }
-        Texture2D texture;
+        Texture2D texture, playerOneEnd, playerTwoEnd;
+        Player p1, p2;
+        EndGameScene endGame;
 
         public ActionScene(Game game) : base(game)
         {
@@ -46,9 +50,9 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
                 Idle = game.Content.Load<Texture2D>("images/hero/IDLE"),
                 Death = game.Content.Load<Texture2D>("images/hero/DEATH")
             };
-            
 
-            Player p1 = new Player(game, sb, new Vector2(Shared.stageSize.X/4,Shared.stageSize.Y), playerOneTexures, playerOneKeys);
+
+            p1 = new Player(game, sb, new Vector2(Shared.stageSize.X / 4, Shared.stageSize.Y), playerOneTexures, playerOneKeys);
 
             KeyModel playerTwoKeys = new KeyModel()
             {
@@ -66,8 +70,8 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
                 Idle = game.Content.Load<Texture2D>("images/alter/IDLE"),
                 Death = game.Content.Load<Texture2D>("images/alter/DEATH")
             };
-            
-            Player p2 = new Player(game, sb, new Vector2(Shared.stageSize.X - (Shared.stageSize.X / 4), Shared.stageSize.Y), playerTwoTexures, playerTwoKeys);
+
+            p2 = new Player(game, sb, new Vector2(Shared.stageSize.X - (Shared.stageSize.X / 4), Shared.stageSize.Y), playerTwoTexures, playerTwoKeys);
             p2.flip = SpriteEffects.FlipHorizontally;
 
             HealthManager h1 = new HealthManager(game, p1, new Vector2(10, 10), Position.Left);
@@ -83,7 +87,9 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
 
         protected override void LoadContent()
         {
-            texture = Game.Content.Load<Texture2D>("images/Scenes/Battle");
+            texture = game.Content.Load<Texture2D>("images/scenes/Battle");
+            playerOneEnd = game.Content.Load<Texture2D>("images/scenes/playerone");
+            playerTwoEnd = game.Content.Load<Texture2D>("images/scenes/playertwo");
             base.LoadContent();
         }
 
@@ -116,12 +122,21 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
                 }
                 if (gameEnded && item is Player)
                 {
-                    ((Player)item).Enabled = false;
-                    ((Player)item).Dispose();
+                    if (p2.isDead)
+                    {
+                        endGame = new EndGameScene(game, playerOneEnd);
+                        HighScoreManager.AddScore(1);
+                    }
+                    else if (p1.isDead)
+                    {
+                        endGame = new EndGameScene(game, playerTwoEnd);
+                        HighScoreManager.AddScore(2);
+                    }
+                    game.Components.Add(endGame);
+                    endGame.Show();
+                    this.Hide();
                 }
             }
-            base.Draw(gameTime);
-
         }
 
         public override void Show()
