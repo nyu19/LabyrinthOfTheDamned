@@ -43,7 +43,6 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 
         }
 
-
         private void XMovementHandler(KeyboardState ks)
         {
 
@@ -71,7 +70,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         {
             if (hasJumped)
             {
-                float i = 2;
+                float i = 3;
                 velocity.Y += 0.15f * i;
             }
 

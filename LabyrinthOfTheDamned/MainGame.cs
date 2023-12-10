@@ -110,7 +110,7 @@ namespace LabyrinthOfTheDamned
                 }
                 else if (selectedIndex == 4 && ks.IsKeyDown(Keys.Enter))
                 {
-                    Exit();
+                    ExitGame();
                 }
             }
 
@@ -153,10 +153,10 @@ namespace LabyrinthOfTheDamned
             }
         }
 
-        public new void Exit()
+        public void ExitGame()
         {
             HighScoreManager.SerializeHighscore();
-            base.Exit();
+            Exit();
         }
     }
 }

@@ -56,7 +56,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.EndgameScene
             }
             else if (selectedIndex == 1 && ks.IsKeyDown(Keys.Enter))
             {
-                Game.Exit();
+                game.ExitGame();
             }
             
 

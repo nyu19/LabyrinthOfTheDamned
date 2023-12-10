@@ -52,7 +52,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
             };
 
 
-            p1 = new Player(game, sb, new Vector2(Shared.stageSize.X / 4, Shared.stageSize.Y), playerOneTexures, playerOneKeys);
+            p1 = new Player(1,game, sb, new Vector2(Shared.stageSize.X / 4, Shared.stageSize.Y), playerOneTexures, playerOneKeys);
 
             KeyModel playerTwoKeys = new KeyModel()
             {
@@ -71,7 +71,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
                 Death = game.Content.Load<Texture2D>("images/alter/DEATH")
             };
 
-            p2 = new Player(game, sb, new Vector2(Shared.stageSize.X - (Shared.stageSize.X / 4), Shared.stageSize.Y), playerTwoTexures, playerTwoKeys);
+            p2 = new Player(2, game, sb, new Vector2(Shared.stageSize.X - (Shared.stageSize.X / 4), Shared.stageSize.Y), playerTwoTexures, playerTwoKeys);
             p2.flip = SpriteEffects.FlipHorizontally;
 
             HealthManager h1 = new HealthManager(game, p1, new Vector2(10, 10), Position.Left);
@@ -120,21 +120,25 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
                 {
                     item.Update(gameTime);
                 }
+
                 if (gameEnded && item is Player)
                 {
                     if (p2.isDead)
                     {
                         endGame = new EndGameScene(game, playerOneEnd);
-                        HighScoreManager.AddScore(1);
                     }
                     else if (p1.isDead)
                     {
                         endGame = new EndGameScene(game, playerTwoEnd);
-                        HighScoreManager.AddScore(2);
                     }
-                    game.Components.Add(endGame);
-                    endGame.Show();
-                    this.Hide();
+                    if (!(((Player)item).isDead))
+                    {
+                        HighScoreManager.AddScore(((Player)item).id);
+                        game.Components.Add(endGame);
+                        endGame.Show();
+                        this.Hide();
+
+                    }
                 }
             }
         }

@@ -25,6 +25,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
 
     public partial class Player : DrawableGameComponent
     {
+        public int id;
         const int FRAME_HEIGHT = 288;
         const int FRAME_WIDTH = 288;
         const int SPEED_FACTOR = 7;
@@ -62,8 +63,9 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
         public Rectangle DestRectangle { get => destRectangle; set => destRectangle = value; }
         public int PlayerHealth { get => playerHealth; set => playerHealth = value; }
 
-        public Player(Game game, SpriteBatch sb, Vector2 startingPosition, TextureModel playerTextures, KeyModel playerKeys) : base(game)
+        public Player(int id,Game game, SpriteBatch sb, Vector2 startingPosition, TextureModel playerTextures, KeyModel playerKeys) : base(game)
         {
+            this.id = id;
             this.game = (MainGame)game;
             this.sb = sb;
             this.destRectangle = new Rectangle((int)startingPosition.X, (int)startingPosition.Y, FRAME_WIDTH * scaleFactor, FRAME_HEIGHT * scaleFactor);

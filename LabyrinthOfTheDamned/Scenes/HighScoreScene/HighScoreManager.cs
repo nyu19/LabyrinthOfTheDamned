@@ -56,12 +56,12 @@ namespace LabyrinthOfTheDamned.Scenes.HighScoreScene
                 FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate);
                 BinaryWriter bw = new BinaryWriter(fs);
 
-                bw.Write("1:" + ScoreSet[0] + ";2:" + ScoreSet[1]);
+                bw.Write("1:" + ScoreSet[1] + ";2:" + ScoreSet[2]);
                 bw.Close();
             }
-            catch 
+            catch (Exception ex)
             {
-
+                System.Windows.Forms.MessageBox.Show(ex.Message);
             }
         }
     }
