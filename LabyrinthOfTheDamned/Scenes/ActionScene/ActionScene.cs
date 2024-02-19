@@ -49,7 +49,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
             LoadContent();
             KeyModel playerOneKeys = new KeyModel()
             {
-                Attack = Keys.F,
+                Attack = Keys.LeftShift,
                 Jump = Keys.W,
                 Left = Keys.A,
                 Right = Keys.D
@@ -67,7 +67,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene
 
             KeyModel playerTwoKeys = new KeyModel()
             {
-                Attack = Keys.RightControl,
+                Attack = Keys.RightShift,
                 Jump = Keys.Up,
                 Left = Keys.Left,
                 Right = Keys.Right

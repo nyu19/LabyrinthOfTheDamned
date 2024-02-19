@@ -42,7 +42,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                 if (p1.Intersects(p2) && this.IsFacing(otherPlayer) && this.frameCounter == 6 && this.mCurrentState == State.Attacking)
                 {
                     otherPlayer.PlayerHealth -= 5;
-                    mCurrentState = State.Hurt;
+                    otherPlayer.mCurrentState = State.Hurt;
                 }
 
                 p1.Inflate(20, 0); 
@@ -51,7 +51,7 @@ namespace LabyrinthOfTheDamned.Scenes.ActionScene.Components
                 if (p1.Intersects(p2) && this.IsFacing(otherPlayer) && this.frameCounter == 6 && this.mCurrentState == State.Attacking)
                 {
                     otherPlayer.PlayerHealth -= 2;
-                    mCurrentState = State.Hurt;
+                    otherPlayer.mCurrentState = State.Hurt;
                 }
             }
         }
