@@ -1,0 +1,3 @@
+# Labyrinth Of The Damned
+
+Embark on an epic journey within the ethereal confines of the Labyrinth of the Damned, a gripping local 2-player PvP game. As the curtain rises, players assume the roles of a valiant knight (Player 1) and his malevolent alter ego (Player 2), engaged in a relentless battle for control and redemption. Unveil the intricacies of their internal struggle as you clash swords and sorcery in a visually stunning labyrinthine arena. Will the knight triumph over his darker reflection, or will the alter ego plunge the world into eternal damnation? The Labyrinth of the Damned beckons, where the lines between hero and villain blur, and the fate of two intertwined souls hangs in the balance.

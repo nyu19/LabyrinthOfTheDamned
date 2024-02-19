@@ -1,7 +1,5 @@
 ﻿/*
- * Names:
- *  - Nakul Upasani
- *  - Shahyar Fida
+ * CreditScene.cs
  * Revision History:
  *  - Created By Shahyar Fida; Created: 1-Dec-2023
  */

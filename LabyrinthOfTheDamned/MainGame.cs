@@ -1,4 +1,11 @@
-﻿using LabyrinthOfTheDamned.Scenes;
+﻿/*
+ * MainGame.cs
+ * Revision History:
+ *  - Created By Nakul Upasani; 1-Dec-2023
+ *  - Updated by Shahyar Fida; 2-Dec-2023
+ * 
+ */
+using LabyrinthOfTheDamned.Scenes;
 using LabyrinthOfTheDamned.Scenes.ActionScene;
 using LabyrinthOfTheDamned.Scenes.CreditScene;
 using LabyrinthOfTheDamned.Scenes.HelpScene;
@@ -12,6 +19,9 @@ using Microsoft.Xna.Framework.Media;
 
 namespace LabyrinthOfTheDamned
 {
+    /// <summary>
+    /// Main game class
+    /// </summary>
     public class MainGame : Microsoft.Xna.Framework.Game
     {
         private GraphicsDeviceManager _graphics;
@@ -23,6 +33,9 @@ namespace LabyrinthOfTheDamned
         public CreditScene creditScene;
         public static KeyboardState oldKeyboardState;
 
+        /// <summary>
+        /// Constructor for MainGame
+        /// </summary>
         public MainGame()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -34,6 +47,9 @@ namespace LabyrinthOfTheDamned
 
         }
 
+        /// <summary>
+        /// Initializes components
+        /// </summary>
         protected override void Initialize()
         {
             Shared.stageSize = new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
@@ -45,6 +61,9 @@ namespace LabyrinthOfTheDamned
             base.Initialize();
         }
 
+        /// <summary>
+        /// Loads Content
+        /// </summary>
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -69,6 +88,10 @@ namespace LabyrinthOfTheDamned
 
         }
 
+        /// <summary>
+        /// Overriden Method for Update
+        /// </summary>
+        /// <param name="gameTime">gametime instance</param>
         protected override void Update(GameTime gameTime)
         {
             int selectedIndex = 0;
@@ -132,6 +155,10 @@ namespace LabyrinthOfTheDamned
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Overriden Method
+        /// </summary>
+        /// <param name="gameTime">gametime Instance of the Game</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkOliveGreen);
@@ -141,6 +168,9 @@ namespace LabyrinthOfTheDamned
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Hides all scenes
+        /// </summary>
         private void hideAllScenes()
         {
             foreach (GameComponent item in Components)
@@ -153,6 +183,9 @@ namespace LabyrinthOfTheDamned
             }
         }
 
+        /// <summary>
+        /// Exits game while serializing
+        /// </summary>
         public void ExitGame()
         {
             HighScoreManager.SerializeHighscore();

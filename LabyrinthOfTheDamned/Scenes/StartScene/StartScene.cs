@@ -1,7 +1,5 @@
 ﻿/*
- * Names:
- *  - Nakul Upasani
- *  - Shahyar Fida
+ * StartScene.cs
  * Revision History:
  *  - Created By Nakul Upasani; Created: 1-Dec-2023
  * 
